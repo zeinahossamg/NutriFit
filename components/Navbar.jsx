@@ -22,7 +22,30 @@ const Navbar = () => {
 
             <div className="md:ml-auto">
               <div className="flex space-x-2">
+                <NavLink
+                  exact
+                  to="/"
+                  activeClassName="text-gray-900 bg-gray-100"
+                  className="text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
+                >
+                  Home
+                </NavLink>
 
+                <NavLink
+                  to="/exercises"
+                  activeClassName="text-gray-900 bg-gray-100"
+                  className="text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
+                >
+                  Exercises
+                </NavLink>
+
+                <NavLink
+                  to="/add-exercise"
+                  activeClassName="text-gray-900 bg-gray-100"
+                  className="text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
+                >
+                  Add Exercise
+                </NavLink>
               </div>
             </div>
           </div>
