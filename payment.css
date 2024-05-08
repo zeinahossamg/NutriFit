@@ -12,6 +12,7 @@ form {
     border-radius: 4px;
     flex-wrap: wrap;
     background-color: white;
+    
     justify-content: center;
     
 }
@@ -22,7 +23,7 @@ form {
     margin-top:50px;
 }
 body{
-    background-color: grey;
+    background-color: rgba(80, 79, 78, 0.9);
 }
 
 label,
@@ -30,6 +31,7 @@ input {
     display: block;
     width: 90%;     
     margin-bottom: 10px;
+    background-color: transparent;
 }
 
 input[type="submit"] {
@@ -156,4 +158,5 @@ input[type="submit"] {
     letter-spacing: 1.5px;
     color: #e2e2e2;
     width: 100%;
+ 
 }
