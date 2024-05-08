@@ -9,10 +9,12 @@ form {
     padding: 20px;
     box-sizing: border-box;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 9px;
+    border-color: black;
+    border-width: 2px;
     flex-wrap: wrap;
     background-color: white;
-    
+   
     justify-content: center;
     
 }
@@ -21,6 +23,7 @@ form {
 }
 .container{
     margin-top:50px;
+    box-shadow: 0, 10, 10, black;
 }
 body{
     background-color: rgba(80, 79, 78, 0.9);
@@ -30,7 +33,7 @@ label,
 input {
     display: block;
     width: 90%;     
-    margin-bottom: 10px;
+    margin-bottom: 3%;
     background-color: transparent;
 }
 
@@ -154,7 +157,7 @@ input[type="submit"] {
 }
 
 .input-label {
-    font-size: 8px;
+    font-size: 10px;
     letter-spacing: 1.5px;
     color: #e2e2e2;
     width: 100%;
