@@ -3,13 +3,8 @@
 
 let nextUserId =6;
 let nextOrderId =5;
+let nextPlanId=3;
 
-
-
-dgf
-fghj;
-hdfg
-dfsg
 
 
 function setActive(element) {
@@ -41,35 +36,11 @@ function showPage(pageId) {
     selectedPage.classList.remove('hidden');
     renderTableClassUsers();
     renderTableClassOrders();
-    
+    renderTableClassProducts();
 }
 
 
-/*const orders =[{
-    productName :'WorkOut',
-    productNumber:'20',
-    Payment:'Visa',
-    status:'pending'
-},
-{
-    productName :'WorkOut',
-    productNumber:'20',
-    Payment:'Visa',
-    status:'pending'
-},
-{
-    productName :'WorkOut',
-    productNumber:'20',
-    Payment:'Visa',
-    status:'pending'
-},
-{
-    productName :'WorkOut',
-    productNumber:'20',
-    Payment:'Visa',
-    status:'pending'
-}];
-*/
+
 
 
 
@@ -89,192 +60,6 @@ function closePopup(popupId) {
 
 
 
-
-
-
-
-
-
-class Order {
-    constructor(planID,planType, duration) {
-        this.planID=planID;
-        this.planType = planType;
-        this.duration = duration;
-        this.price = this.calculatePrice();
-    }
-
-    calculatePrice() {
-        const prices = {
-            'basic': {
-                '1-month': 50,
-                '3-months': 120,
-                '6-months': 200
-            },
-            'premium': {
-                '1-month': 80,
-                '3-months': 200,
-                '6-months': 350
-            }
-        };
-        return prices[this.planType][this.duration];
-    }
-
-     }
-
-
-let Orders =[];
-
-Orders.push(new Order(1,"basic","6-months"));
-Orders.push(new Order(2,"premium","3-months"));
-Orders.push(new Order(3,"premium","6-months"));
-Orders.push(new Order(4,"basic","1-month"));
-
-
-function addOrder() {
-    
-    let newPlan = document.getElementById('newPlan').value;
-    let newDuration = document.getElementById('newDuration').value;
-
-    document.getElementById('newPlanError').classList.add('hidden');
-    document.getElementById('newDurationError').classList.add('hidden');
-    // Validate input fields
-   
-   
-    if ( newPlan === "" || newDuration === "") {
-        document.getElementById('newDurationError').textContent='please fill both values';
-        document.getElementById('newDurationError').classList.remove('hidden');
-
-        return;
-    }
-
-    document.getElementById('newDurationError').textContent='Please enter Duration from 1 to 3 months';
-
- if(!isValidOrder(newPlan,newDuration)){
-    
-document.getElementById('newPlanError').classList.remove('hidden');
-document.getElementById('newDurationError').classList.remove('hidden');
-if (isValidPlan(newPlan)) {
-    document.getElementById('newPlanError').classList.add('hidden');
-}
-if (isValidDuration(newDuration)) {
-    document.getElementById('newDurationError').classList.add('hidden');
-}
-return;
-
- } 
-    
-
-    // Create a new Order object
-    let newOrder = new Order(nextOrderId++, newPlan, newDuration);
-
-    // Push the new order to the orders array (assuming it's defined globally)
-    Orders.push(newOrder);
-
-    console.log('Adding new order:', newOrder);
-    console.log(Orders);
-
-    // Close the popup after adding the order
-    closePopup('addPopupOrder');
-
-    // Render the updated table of orders
-    renderTableClassOrders(); // You need to implement this function to render the order table
-}
-
-function editOrder() {
-    let orderId = parseInt(document.getElementById('Ordertoedit').value);
-    let newPlan = document.getElementById('newplanedit').value;
-    let newDuration = document.getElementById('newDurationedit').value;
-
-    // Find the order to edit by its ID
-    const orderToEdit = Orders.find(order => order.planID === orderId);
-
-   
-
-   
- // Hide error messages initially
- document.getElementById('editPlanError').classList.add('hidden');
- document.getElementById('editDurationError').classList.add('hidden');
-
- // Validate input fields
- if (newPlan === "" || newDuration === ""|| orderId ==="") {
-     document.getElementById('editDurationError').textContent = 'Please fill  values';
-     document.getElementById('editDurationError').classList.remove('hidden');
-     return;
- }
- document.getElementById('editDurationError').textContent = 'Please enter 1 to 3 months';
- // Check if the order is valid
- if (!isValidOrder(newPlan, newDuration)) {
-     // Display error messages for invalid inputs
-     document.getElementById('editPlanError').classList.remove('hidden');
-     document.getElementById('editDurationError').classList.remove('hidden');
-     
-     // Hide error message if corresponding input is valid
-     if (isValidPlan(newPlan)) {
-         document.getElementById('editPlanError').classList.add('hidden');
-     }
-     if (isValidDuration(newPlan, newDuration)) {
-         document.getElementById('editDurationError').classList.add('hidden');
-     }
-     return;
- }
-    // Update the order with new values
-    
-
-    let newOrder = new Order(orderId,newPlan,newDuration);
-    const index = Orders.findIndex(order => order.planID === orderId);
-    Orders[index] = newOrder;
-
-
-    // Close the popup after editing the order
-    closePopup('editPopupOrder');
-
-    // Render the updated table of orders
-    renderTableClassOrders();
-}
-
-function deleteOrder() {
-    let orderIdToDelete = parseInt(document.getElementById('OrderIDDelete').value);
-
-    // Find the index of the order to delete by its ID
-    const indexToDelete = Orders.findIndex(order => order.planID === orderIdToDelete);
-
-    if (indexToDelete === -1) {
-        document.getElementById('DeleteIDError').classList.remove('hidden');
-        return;
-    }
-
-    // Remove the order from the orders array
-    Orders.splice(indexToDelete, 1);
-
-    console.log('Deleting order with ID:', orderIdToDelete);
-
-    // Close the popup after deleting the order
-    closePopup('deletePopupOrder');
-
-    // Render the updated table of orders
-    renderTableClassOrders();
-}
-
-function renderTableClassOrders() {
-    document.getElementById('RecentOrdertable').innerHTML = '';
-    Orders.forEach(order => {
-        const tr = document.createElement('tr');
-    
-        const trcontent = `
-        <td>${order.planID}</td>
-        <td>${order.planType}</td>
-        <td>${order.duration}</td>
-        <td>${order.price}</td>
-        
-        
-        `;
-    
-        tr.innerHTML = trcontent;
-        
-       
-document.getElementById('RecentOrdertable').appendChild(tr);
-    });
-}
 class User {
     constructor(id, username, password, role, email) {
         this.id = id;
@@ -309,6 +94,14 @@ function isEmailValid(email) {
     return pattern.test(email);
     
 }  
+function isValidDurationonly(duration) {
+    // Define an array of valid durations
+    const validDurations = ['1-month', '3-months', '6-months'];
+    
+    // Check if the provided duration exists in the valid durations array
+    return validDurations.includes(duration);
+}
+
 function isValidOrder(planType,duration) {
     const prices = {
         'basic': {
@@ -610,6 +403,56 @@ users.push(new Admin(3,'mohanad','mohanad123','mohand@gmail.com'));
 users.push(new Admin(4,'zeina','zeina123','zeina@gmail.com'));
 users.push(new Client(5,'Ahmed','Ahmed123','ahmed@gmail.com'));
 
+
+
+function addPlan() {
+    let newProductName = parseInt(document.getElementById('newProductName').value);
+    let newDuration = document.getElementById('newProductDuration').value;
+let userIdAddTo = document.getElementById('newUserID').value;
+    document.getElementById('AddProducterrorError').classList.add('hidden');
+    document.getElementById('AddProductDurationError').classList.add('hidden');
+    
+    // Validate input fields
+    if (newProductName === "" || newDuration === "") {
+        document.getElementById('AddProductDurationError').textContent = 'Please fill all values';
+        document.getElementById('AddProductDurationError').classList.remove('hidden');
+        return;
+    }
+
+    // Check if the plan is valid
+    document.getElementById('AddProductDurationError').textContent = 'please enter valid duration.   1-month,2-months,3-months or 6-months';
+
+    // Check if the duration is valid
+    if (!isValidDurationonly(newDuration)) {
+        document.getElementById('AddProductDurationError').classList.remove('hidden');
+        return;
+    }
+    const userToAddto = users.find(user => user.id === userIdAddTo);
+    console.log(userIdAddTo)
+    if(!userToAddto ){
+console.log('dffd')
+console.log(users)
+        document.getElementById('AddUSerIdError').classList.remove('hidden');
+        return;
+    }
+    document.getElementById('AddUSerIdError').classList.add('hidden');
+    // Create a new Plan object
+    let newPlan = new Plan(nextPlanId++, newProductName, newDuration,1);
+
+    // Push the new plan to the Plans array (assuming it's defined globally)
+    Products.push(newPlan);
+
+    console.log('Adding new plan:', newPlan);
+    
+
+    // Close the popup after adding the plan
+    closePopup('addPopupProduct');
+
+    // Render the updated table of plans
+    renderTableClassProducts(); // You need to implement this function to render the plan table
+}
+
+
 function renderTableClassUsers() {
     
     document.getElementById('USERTABLE').innerHTML = '';
@@ -662,7 +505,15 @@ loginBtn.addEventListener('click', () => {
     container.classList.remove("active");
 });
 
-
+const sideMenu = document.querySelector("aside");
+const menuBtn  = document.querySelector("#menu-btn");
+const closebtn = document.querySelector(".close");
+menuBtn.addEventListener('click',() => {
+    sideMenu.style.display ='block';
+})
+closebtn.addEventListener('click', ()=>{
+    sideMenu.style.display ='none';
+})
 
 
 /*
