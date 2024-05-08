@@ -317,24 +317,20 @@ clip-path: circle(0% at 0 50%);
 .about__card p {
     color: var(--text-light);
 }
+
 .session {
     display: flex;
     justify-content: space-between; /* Align cards at the start and end with space in between */
-   align-items: center;
   }
-  .session__title {
-    font-size: 2rem; /* Adjust font size as needed */
-    font-weight: bold;
-    color: var(--primary-color); /* Use your preferred color */
-    margin-bottom: 2rem; /* Add space below the title */
-  }
+  
   .session__card {
     padding: 5rem 2rem;
     margin: 1rem;
     text-align: center;
-    background-size: cover;
-    flex: 1rem; /* Set width for each card (minus the gap) */
-    max-width: 50%; /* Set a maximum width for each card */
+    flex: 1; /* Allow cards to grow and shrink */
+    max-width: calc(50% - 2rem); /* Set a maximum width for each card */
+    background-size: cover; /* Ensure the background image covers the entire area */
+    background-position: center; /* Center the background image */
   }
   
   /* Add background images for session cards */
@@ -344,7 +340,6 @@ clip-path: circle(0% at 0 50%);
   
   .session__card:nth-child(2) {
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("session-2.jpg");
-      
   }
   
   .session__card h4 {
@@ -376,9 +371,11 @@ clip-path: circle(0% at 0 50%);
     margin-bottom: 2rem;
     color: var(--extra-light);
   }
-  .session__card .btn{
+  
+  .session__card .btn {
     background-color: var(--primary-color);
   }
+  
   
 @media (width > 768px) {
     nav {
