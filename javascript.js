@@ -545,16 +545,22 @@ function login() {
 
     const user = users.find(user => user.username === username && user.password === password);
     console.log(user);
-    if (user) {
+    if (user && user.role == "Admin") {
         document.getElementById('loginError').classList.add('hidden');
         document.getElementById('loginUsername').classList.remove('error-input');
     document.getElementById('loginPassword').classList.remove('error-input');
         showContent()
         renderTableClassOrders();
         addRecentViewer(user);
+    } else if(user && user.role == "Client"){
+        openHTMLFile();
+
     } else {
         document.getElementById('loginError').classList.remove('hidden');
     }
+}
+function openHTMLFile() {
+    window.open('payment & Billing.html', '_blank');
 }
 
 function signup() {
