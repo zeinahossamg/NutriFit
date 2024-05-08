@@ -22,13 +22,13 @@ form {
     margin-top:50px;
 }
 body{
-    background-color: black;
+    background-color: grey;
 }
 
 label,
 input {
     display: block;
-    width: 90%;
+    width: 90%;     
     margin-bottom: 10px;
 }
 
