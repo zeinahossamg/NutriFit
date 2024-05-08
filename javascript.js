@@ -3,13 +3,8 @@
 
 let nextUserId =6;
 let nextOrderId =5;
+let nextPlanId=3;
 
-
-
-dgf
-fghj;
-hdfg
-dfsg
 
 
 function setActive(element) {
@@ -41,35 +36,11 @@ function showPage(pageId) {
     selectedPage.classList.remove('hidden');
     renderTableClassUsers();
     renderTableClassOrders();
-    
+    renderTableClassProducts();
 }
 
 
-/*const orders =[{
-    productName :'WorkOut',
-    productNumber:'20',
-    Payment:'Visa',
-    status:'pending'
-},
-{
-    productName :'WorkOut',
-    productNumber:'20',
-    Payment:'Visa',
-    status:'pending'
-},
-{
-    productName :'WorkOut',
-    productNumber:'20',
-    Payment:'Visa',
-    status:'pending'
-},
-{
-    productName :'WorkOut',
-    productNumber:'20',
-    Payment:'Visa',
-    status:'pending'
-}];
-*/
+
 
 
 
@@ -88,7 +59,184 @@ function closePopup(popupId) {
 }
 
 
+class Plan{
+    constructor(ProductID,Productname,Duration,Price){
+this.ProductID = ProductID;
+this.Productname= Productname;
+this.Duration = Duration;
 
+this.price = this.calculatePrice();
+
+    }
+    calculatePrice() {
+        console.log("poipoi")
+        const prices = {
+            'basic': {
+                '1-month': 50,
+                '3-months': 120,
+                '6-months': 200
+            },
+            'premium': {
+                '1-month': 80,
+                '3-months': 200,
+                '6-months': 350
+            }
+        };
+        return prices[this.Productname][this.Duration];
+    }
+}
+
+let Products =[];
+
+Products.push(new Plan(1,"basic","6-months"));
+Products.push(new Plan(2,"premium","3-months"));
+Products.push(new Plan(3,"premium","6-months"));
+
+
+function renderTableClassProducts() {
+    document.getElementById('ProductTABLE').innerHTML = '';
+    Products.forEach(Product => {
+        const tr = document.createElement('tr');
+    
+        const trcontent = `
+        <td>${Product.ProductID}</td>
+        <td>${Product.Productname}</td>
+        <td>${Product.Duration}</td>
+        
+        <td>${Product.price}</td>
+        
+        
+        `;
+    console.log("igjkh")
+        tr.innerHTML = trcontent;
+        
+       
+document.getElementById('ProductTABLE').appendChild(tr);
+    });
+}
+
+function addPlan() {
+    let newProductName = document.getElementById('newProductName').value;
+    let newDuration = document.getElementById('newProductDuration').value;
+
+    document.getElementById('AddProducterrorError').classList.add('hidden');
+    document.getElementById('AddProductDurationError').classList.add('hidden');
+    
+    // Validate input fields
+    if (newProductName === "" || newDuration === "") {
+        document.getElementById('AddProductDurationError').textContent = 'Please fill all values';
+        document.getElementById('AddProductDurationError').classList.remove('hidden');
+        return;
+    }
+
+    // Check if the plan is valid
+    document.getElementById('AddProductDurationError').textContent = 'please enter valid duration.   1-month,2-months,3-months or 6-months';
+
+    // Check if the duration is valid
+    if (!isValidDurationonly(newDuration)) {
+        document.getElementById('AddProductDurationError').classList.remove('hidden');
+        return;
+    }
+    
+    // Create a new Plan object
+    let newPlan = new Plan(nextPlanId++, newProductName, newDuration);
+
+    // Push the new plan to the Plans array (assuming it's defined globally)
+    Products.push(newPlan);
+
+    console.log('Adding new plan:', newPlan);
+    
+
+    // Close the popup after adding the plan
+    closePopup('addPopupProduct');
+
+    // Render the updated table of plans
+    renderTableClassProducts(); // You need to implement this function to render the plan table
+}
+
+function editPlan() {
+    let planId = parseInt(document.getElementById('ProductIdedit').value);
+    let newProductName = document.getElementById('ProductNameedit').value;
+    let newDuration = document.getElementById('newProductDurationedit').value;
+   
+
+   
+
+
+    
+
+    document.getElementById('EditErrorDuration').classList.add('hidden');
+    document.getElementById('EditErrorProductname').classList.add('hidden');
+    
+    // Validate input fields
+    if (newProductName === "" || newDuration === "") {
+        document.getElementById('EditErrorDuration').textContent = 'Please fill both values';
+        document.getElementById('EditErrorDuration').classList.remove('hidden');
+        return;
+    }
+
+    // Check if the plan is valid
+    document.getElementById('EditErrorDuration').textContent = 'Please enter 1-month, 2-month or 3 month';
+
+    // Check if the duration is valid
+    if (!isValidDurationonly(newDuration)) {
+        document.getElementById('EditErrorDuration').classList.remove('hidden');
+        return;
+    }
+
+    // Find the plan to edit by its ID
+    console.log(Products)
+    const planToEdit = Products.find(plan => plan.ProductID === planId);
+
+    if (!planToEdit) {
+        alert('Plan not found');
+        return;
+    }
+
+    // Update the plan with new values
+    planToEdit.Productname = newProductName;
+    planToEdit.Duration = newDuration;
+
+    console.log('Editing plan:', planToEdit);
+
+    // Close the popup after editing the plan
+    closePopup('editPopupProduct');
+
+    // Render the updated table of plans
+    renderTableClassProducts(); // You need to implement this function to render the plan table
+}
+
+function deletePlan() {
+    // Get the plan ID to delete
+    let planIdToDelete = parseInt(document.getElementById('pproductID').value);
+
+    // Find the index of the plan to delete by its ID
+    const indexToDelete = Products.findIndex(plan => plan.ProductID === planIdToDelete);
+    document.getElementById('DeleteIDError').classList.add('hidden');
+
+    // Check if the plan ID is valid
+    if (isNaN(planIdToDelete)) {
+        document.getElementById('DeleteIDError').classList.remove('hidden');
+        return;
+    }
+
+    // Check if the plan exists
+    if (indexToDelete === -1) {
+        document.getElementById('DeleteIDError').classList.remove('hidden');
+        return;
+    }
+
+    // Remove the plan from the Products array
+    Products.splice(indexToDelete, 1);
+
+    console.log('Deleting plan with ID:', planIdToDelete);
+
+    // Close the popup after deleting the plan
+    closePopup('deletePopupProduct');
+
+    // Render the updated table of plans
+    renderTableClassProducts();
+}
 
 
 
@@ -185,9 +333,16 @@ function editOrder() {
     let newPlan = document.getElementById('newplanedit').value;
     let newDuration = document.getElementById('newDurationedit').value;
 
+    document.getElementById('editIDError').classList.add('hidden');
+
     // Find the order to edit by its ID
     const orderToEdit = Orders.find(order => order.planID === orderId);
 
+    if (!orderToEdit){
+
+        document.getElementById('editIDError').classList.remove('hidden');
+        return;
+    }
    
 
    
@@ -309,6 +464,14 @@ function isEmailValid(email) {
     return pattern.test(email);
     
 }  
+function isValidDurationonly(duration) {
+    // Define an array of valid durations
+    const validDurations = ['1-month', '3-months', '6-months'];
+    
+    // Check if the provided duration exists in the valid durations array
+    return validDurations.includes(duration);
+}
+
 function isValidOrder(planType,duration) {
     const prices = {
         'basic': {
@@ -610,6 +773,56 @@ users.push(new Admin(3,'mohanad','mohanad123','mohand@gmail.com'));
 users.push(new Admin(4,'zeina','zeina123','zeina@gmail.com'));
 users.push(new Client(5,'Ahmed','Ahmed123','ahmed@gmail.com'));
 
+
+
+function addPlan() {
+    let newProductName = parseInt(document.getElementById('newProductName').value);
+    let newDuration = document.getElementById('newProductDuration').value;
+let userIdAddTo = document.getElementById('newUserID').value;
+    document.getElementById('AddProducterrorError').classList.add('hidden');
+    document.getElementById('AddProductDurationError').classList.add('hidden');
+    
+    // Validate input fields
+    if (newProductName === "" || newDuration === "") {
+        document.getElementById('AddProductDurationError').textContent = 'Please fill all values';
+        document.getElementById('AddProductDurationError').classList.remove('hidden');
+        return;
+    }
+
+    // Check if the plan is valid
+    document.getElementById('AddProductDurationError').textContent = 'please enter valid duration.   1-month,2-months,3-months or 6-months';
+
+    // Check if the duration is valid
+    if (!isValidDurationonly(newDuration)) {
+        document.getElementById('AddProductDurationError').classList.remove('hidden');
+        return;
+    }
+    const userToAddto = users.find(user => user.id === userIdAddTo);
+    console.log(userIdAddTo)
+    if(!userToAddto ){
+console.log('dffd')
+console.log(users)
+        document.getElementById('AddUSerIdError').classList.remove('hidden');
+        return;
+    }
+    document.getElementById('AddUSerIdError').classList.add('hidden');
+    // Create a new Plan object
+    let newPlan = new Plan(nextPlanId++, newProductName, newDuration,1);
+
+    // Push the new plan to the Plans array (assuming it's defined globally)
+    Products.push(newPlan);
+
+    console.log('Adding new plan:', newPlan);
+    
+
+    // Close the popup after adding the plan
+    closePopup('addPopupProduct');
+
+    // Render the updated table of plans
+    renderTableClassProducts(); // You need to implement this function to render the plan table
+}
+
+
 function renderTableClassUsers() {
     
     document.getElementById('USERTABLE').innerHTML = '';
@@ -662,7 +875,15 @@ loginBtn.addEventListener('click', () => {
     container.classList.remove("active");
 });
 
-
+const sideMenu = document.querySelector("aside");
+const menuBtn  = document.querySelector("#menu-btn");
+const closebtn = document.querySelector(".close");
+menuBtn.addEventListener('click',() => {
+    sideMenu.style.display ='block';
+})
+closebtn.addEventListener('click', ()=>{
+    sideMenu.style.display ='none';
+})
 
 
 /*
