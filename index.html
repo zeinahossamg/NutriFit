@@ -13,7 +13,7 @@
 
 <body >
 
-    <div class="Log-SignContainer   " id="Log-SignContainer">
+    <div class="Log-SignContainer hidden  " id="Log-SignContainer">
         <div class="form-container sign-up">
             <form>
                 <h1>Create Account</h1>
@@ -66,7 +66,7 @@
         </div>
     </div>
 
-    <div class="container hidden ">
+    <div class="container  ">
         <aside>
             <div class="top">
                 <div class="logo">
@@ -84,6 +84,10 @@
                         <i class="fa-solid fa-user-pen fa-lg"></i></span>
                     <h1> Edit Users</h1>
                 </a>
+                <a href="#" onclick="setActive(this); showPage('editProduct')"> <span>
+                    <i class="fa-solid fa-user-pen fa-lg"></i></span>
+                <h1> Edit Plan</h1>
+            </a>
                 <a href="#" onclick="openPopup('Sign-Out')">
                     <i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>
                     <h1> Sign out</h1>
@@ -176,7 +180,7 @@
                                     <span class="close" onclick="closePopup('editPopupOrder')">&times;</span>
                                     <h2>Edit Order</h2>
                                     <input type="text" id="Ordertoedit" 
-                                    class="inputdata" placeholder="ProductID"><br><br>
+                                    class="inputdata" placeholder="ProductID"><span id="editIDError" class="error-message hidden">please enter id</span><br><br>
                                 <input type="text" id="newplanedit" 
                                 class="inputdata" placeholder="New plan"><span id="editPlanError" class="error-message hidden">please enter basic or premium</span><br><br>
                                 <input type="text" id="newDurationedit"
@@ -281,90 +285,89 @@
                 </div>
             </div>
         </div>
-        <div id="Sign-Out" class=" popup-container  hidden ">
+
+
+
+
+
+
+        <div id="editProduct" class="page hidden">
+            <div class="Tablelist">
+                <h2>Products</h2>
+                <table>
+                    <thead>
+                        <tr><th>ProductID</th>
+                            <th>Product name</th>
+                            <th>Duration</th>
+                            
+                            <th>Price</th>
+                            
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="ProductTABLE" >
+                        
+                         
+                    </tbody>
+                    
+                </table>
+                <button id="addButton" class="editors" onclick="openPopup('addPopupProduct')">Add</button>
+<button id="editButton" class="editors" onclick="openPopup('editPopupProduct')">Edit</button>
+<button id="deleteButton" class="editors" onclick="openPopup('deletePopupProduct')">Delete</button>
+        </div>
+        <div id="addPopupProduct" class="popup-container">
             <div class="popup-content">
-                <span class="close" onclick="closePopup('Sign-Out')">&times;</span>
-                <h2>Sign Out</h2>
-                <p>Are you sure you want to sign out?</p>
-                <button class="editors" onclick="confirmSignOut()">Yes, Sign Out</button>
-                <button class="editors" onclick="closePopup('Sign-Out')">Cancel</button>
+                <span class="close" onclick="closePopup('addPopupProduct')">&times;</span>
+                <h2>Add Data</h2>
+                
+
+                <input type="text" id="newProductName"
+                class="inputdata" placeholder="new Product Name"><span id="AddProducterrorError" class="error-message hidden">this productname is unavailable</span><br><br>
+
+                <input type="text" id="newProductDuration"
+                class="inputdata" placeholder="Duration"><span id="AddProductDurationError" class="error-message hidden">unavailable Duration</span><br><br>
+
+                <input type="text" id="newUserID"
+                class="inputdata" placeholder="user-id"><span id="AddUSerIdError" class="error-message hidden">please enter valid user id</span><br><br>
+                
+                <button onclick="addPlan()" class="editors">Add</button>
             </div>
-        </main>
-
-
-
-
-
-        <div class="right">
-            <div class="top">
-                <button id="menu-btn">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-                <div class="theme-toggler">
-                    <span> <i class="fa-regular fa-sun"></i>
-                        <i class="fa-regular fa-moon"></i></span>
-                   
-                </div>
-                <div class="profile">
-                    <div class=" info">
-                        <p>hey, <b>ismail</b></p>
-                        <small class="text-muted">Admin</small>
-                    </div>
-                    <div >
-                        <i class="fa-regular fa-user fa-2xl"></i>
-                    </div>
-                </div>
-
             </div>
-<div class="recent-viewer">
-<h2> Recent visitors</h2>
-<div class="visitors">
-    <div class="visitor">
-        <div >
-            <i class="fa-regular fa-user fa-lg"></i>        </div>
-        <div class="visited">
-            <p>ismail has visited the website</p>
-            <small class="text-muted"> 2 minutes ago</small>
-        </div>
-    </div>
+            <div id="editPopupProduct" class="popup-container">
+                <div class="popup-content">
+                    <span class="close" onclick="closePopup('editPopupProduct')">&times;</span>
+                    <h2>Edit Data</h2>
+                    <input type="text" id="ProductIdedit" 
+                    class="inputdata" placeholder="ProductID"><span id="EditErrorProductId" class="error-message hidden">product not found!</span><br><br>
 
+                    
+                <input type="text" id="ProductNameedit" 
+                class="inputdata" placeholder="ProductName"><span id="EditErrorProductname" class="error-message hidden">Please enter correct name</span><br><br>
 
-    <div class="visitor">
-        <div >
-            <i class="fa-regular fa-user fa-lg"></i>        <div class="visited">
-            <p>youssef has visited the website</p>
-            <small class="text-muted"> 2 minutes ago</small>
-        </div>
-    </div>
+                <input type="text" id="newProductDurationedit"
+                class="inputdata" placeholder="Duration"><span id="EditErrorDuration" class="error-message hidden">Duration is incorrect</span><br><br>
 
+              
 
-    <div class="visitor">
-        <div >
-            <i class="fa-regular fa-user fa-lg"></i>        </div>
-        <div class="visited">
-            <p>mohanad has visited the website</p>
-            <small class="text-muted"> 2 minutes ago</small>
-        </div>
-    </div>
+                
 
-    <div class="visitor">
-        <div >
-            <i class="fa-regular fa-user fa-lg"></i>        </div>
-        <div class="visited">
-            <p>zeina has visited the website</p>
-            <small class="text-muted"> 2 minutes ago</small>
-        </div>
-    </div>
-</div>
-</div>
-</div>
+                <button onclick="editPlan()" class="editors">Edit</button>
+                </div>
+            </div>
+            <div id="deletePopupProduct" class="popup-container">
+                <div class="popup-content">
+                    <span class="close" onclick="closePopup('deletePopupProduct')">&times;</span>
+                    <h2>Delete Data</h2>
+                    <p>please enter id for deletion</p>
+                    <input type="text" id="pproductID" 
+                    class="inputdata" placeholder="ProductID"><span id="DeleteErrorProductId" class="error-message hidden">Id not found </span><br><br>
+                    <button onclick="deletePlan()" class="editors">Delete</button>
+                </div>
+            </div>
         </div>
 
-        
 
 
-        </div>
-    </div>
 </body>
 <script src="javascript.js"></script>
 
