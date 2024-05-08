@@ -243,7 +243,193 @@ function deletePlan() {
 
 
 
+class Order {
+    constructor(planID,planType, duration) {
+        this.planID=planID;
+        this.planType = planType;
+        this.duration = duration;
+        this.price = this.calculatePrice();
+    }
 
+    calculatePrice() {
+        const prices = {
+            'basic': {
+                '1-month': 50,
+                '3-months': 120,
+                '6-months': 200
+            },
+            'premium': {
+                '1-month': 80,
+                '3-months': 200,
+                '6-months': 350
+            }
+        };
+        return prices[this.planType][this.duration];
+    }
+
+     }
+
+
+let Orders =[];
+
+Orders.push(new Order(1,"basic","6-months"));
+Orders.push(new Order(2,"premium","3-months"));
+Orders.push(new Order(3,"premium","6-months"));
+Orders.push(new Order(4,"basic","1-month"));
+
+
+function addOrder() {
+    
+    let newPlan = document.getElementById('newPlan').value;
+    let newDuration = document.getElementById('newDuration').value;
+
+    document.getElementById('newPlanError').classList.add('hidden');
+    document.getElementById('newDurationError').classList.add('hidden');
+    // Validate input fields
+   
+   
+    if ( newPlan === "" || newDuration === "") {
+        document.getElementById('newDurationError').textContent='please fill both values';
+        document.getElementById('newDurationError').classList.remove('hidden');
+
+        return;
+    }
+
+    document.getElementById('newDurationError').textContent='Please enter Duration from 1 to 3 months';
+
+ if(!isValidOrder(newPlan,newDuration)){
+    
+document.getElementById('newPlanError').classList.remove('hidden');
+document.getElementById('newDurationError').classList.remove('hidden');
+if (isValidPlan(newPlan)) {
+    document.getElementById('newPlanError').classList.add('hidden');
+}
+if (isValidDuration(newDuration)) {
+    document.getElementById('newDurationError').classList.add('hidden');
+}
+return;
+
+ } 
+    
+
+    // Create a new Order object
+    let newOrder = new Order(nextOrderId++, newPlan, newDuration);
+
+    // Push the new order to the orders array (assuming it's defined globally)
+    Orders.push(newOrder);
+
+    console.log('Adding new order:', newOrder);
+    console.log(Orders);
+
+    // Close the popup after adding the order
+    closePopup('addPopupOrder');
+
+    // Render the updated table of orders
+    renderTableClassOrders(); // You need to implement this function to render the order table
+}
+
+function editOrder() {
+    let orderId = parseInt(document.getElementById('Ordertoedit').value);
+    let newPlan = document.getElementById('newplanedit').value;
+    let newDuration = document.getElementById('newDurationedit').value;
+
+    document.getElementById('editIDError').classList.add('hidden');
+
+    // Find the order to edit by its ID
+    const orderToEdit = Orders.find(order => order.planID === orderId);
+
+    if (!orderToEdit){
+
+        document.getElementById('editIDError').classList.remove('hidden');
+        return;
+    }
+   
+
+   
+ // Hide error messages initially
+ document.getElementById('editPlanError').classList.add('hidden');
+ document.getElementById('editDurationError').classList.add('hidden');
+
+ // Validate input fields
+ if (newPlan === "" || newDuration === ""|| orderId ==="") {
+     document.getElementById('editDurationError').textContent = 'Please fill  values';
+     document.getElementById('editDurationError').classList.remove('hidden');
+     return;
+ }
+ document.getElementById('editDurationError').textContent = 'Please enter 1 to 3 months';
+ // Check if the order is valid
+ if (!isValidOrder(newPlan, newDuration)) {
+     // Display error messages for invalid inputs
+     document.getElementById('editPlanError').classList.remove('hidden');
+     document.getElementById('editDurationError').classList.remove('hidden');
+     
+     // Hide error message if corresponding input is valid
+     if (isValidPlan(newPlan)) {
+         document.getElementById('editPlanError').classList.add('hidden');
+     }
+     if (isValidDuration(newPlan, newDuration)) {
+         document.getElementById('editDurationError').classList.add('hidden');
+     }
+     return;
+ }
+    // Update the order with new values
+    
+
+    let newOrder = new Order(orderId,newPlan,newDuration);
+    const index = Orders.findIndex(order => order.planID === orderId);
+    Orders[index] = newOrder;
+
+
+    // Close the popup after editing the order
+    closePopup('editPopupOrder');
+
+    // Render the updated table of orders
+    renderTableClassOrders();
+}
+
+function deleteOrder() {
+    let orderIdToDelete = parseInt(document.getElementById('OrderIDDelete').value);
+
+    // Find the index of the order to delete by its ID
+    const indexToDelete = Orders.findIndex(order => order.planID === orderIdToDelete);
+
+    if (indexToDelete === -1) {
+        document.getElementById('DeleteIDError').classList.remove('hidden');
+        return;
+    }
+
+    // Remove the order from the orders array
+    Orders.splice(indexToDelete, 1);
+
+    console.log('Deleting order with ID:', orderIdToDelete);
+
+    // Close the popup after deleting the order
+    closePopup('deletePopupOrder');
+
+    // Render the updated table of orders
+    renderTableClassOrders();
+}
+
+function renderTableClassOrders() {
+    document.getElementById('RecentOrdertable').innerHTML = '';
+    Orders.forEach(order => {
+        const tr = document.createElement('tr');
+    
+        const trcontent = `
+        <td>${order.planID}</td>
+        <td>${order.planType}</td>
+        <td>${order.duration}</td>
+        <td>${order.price}</td>
+        
+        
+        `;
+    
+        tr.innerHTML = trcontent;
+        
+       
+document.getElementById('RecentOrdertable').appendChild(tr);
+    });
+}
 class User {
     constructor(id, username, password, role, email) {
         this.id = id;
