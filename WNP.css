@@ -285,7 +285,7 @@ tbody tr:nth-child(even) {
     margin: auto; /* Add this line to center horizontally */
     position: absolute; /* Add this line to center vertically */
     top: 280px;
-    bottom: 0;
+    bottom: 300;
     left: 0;
     right: 0;
 }
@@ -387,6 +387,7 @@ tbody tr:nth-child(even) {
     text-shadow: 0 0 .5em var(--glow-color);
     position: relative;
     transition: all 0.3s;
+    margin-top:55px;
 }
 
 #GB:hover{
@@ -407,20 +408,21 @@ tbody tr:nth-child(even) {
     background-color:white;
 }
 
-.accountform{
+
+/* .accountform{
     background-color:white;
     width:400px;
     height:700px;
-    margin: auto; /* Add this line to center horizontally */
-    position: absolute; /* Add this line to center vertically */
+    margin: auto;
+    position: absolute;
     top:700px;
     bottom:500px;
     left: 0;
     right: 0;
     padding:30px;
     border-radius:10px;
-}
-.profpic{
+} */
+/* .profpic{
     background-color:rgb(115, 115, 115);
     height:200px;
     width:200px;
@@ -428,38 +430,38 @@ tbody tr:nth-child(even) {
     top:0;
     left:100px;
     margin-left:100px;
-}
+} */
 
-.profpic::after {
+/* .profpic::after {
     content: "";
     position: absolute;
-    width: 1px; /* Width of the line */
-    height: 230px; /* Height of the line */
-    background-color: white; /* Color of the line */
+    width: 1px;
+    height: 230px;
+    background-color: white;
     top: 0;
     left: 50%;
-    transform: translateX(-50%); /* Center the line horizontally */
-}
+    transform: translateX(-50%);
+} */
 
-.profpic:hover{
+/* .profpic:hover{
     content:"Your Profile Picture";
-    width: 200px; /* Adjust the width of the half circle */
-    height: 200px; /* Adjust the height of the half circle */
-    border-top-left-radius: 100px; /* Set the radius for the top left corner to half the height */
+    width: 200px;
+    height: 200px;
+    border-top-left-radius: 100px;
     border-top-right-radius: 50px;
     cursor:pointer;
     font-size:20px;
     color:white;
     top:40px;
     background-color:#8500d2;
-}
+} */
 
-.ppic{
+/* .ppic{
     height:250px;
     width:400px;
-    /* border-style:solid; */
+    /* border-style:solid;
     border-bottom: solid;
-}
+} */
 
 /* .pplan{
 
@@ -475,27 +477,34 @@ tbody tr:nth-child(even) {
 
 
 .Acontainer {
-    max-width: 800px;
+    width:400px;
+    height:400px;
     margin: 50px auto;
-    padding: 20px;
+    padding: 30px;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgb(255, 255, 255);
 }
 
-h2, h3 {
+h2,h3,p{
     margin-bottom: 10px;
+    justify-content:center;
+    align-items:center;
+    display:flex;
+    font-size:25px;
 }
 
 .profile-info {
     display: flex;
     align-items: center;
+    justify-content:center;
 }
 
 .profile-info img {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
+    justify-content:center;
     /* margin-right: 20px; */
 }
 #PF{
@@ -511,10 +520,44 @@ h2, h3 {
     flex: 1;
 }
 
-.order-history ul {
-    list-style: none;
-    padding: 0;
+.order-history{
+    justify-content:center;
+    display:flex;
+    align-items:center;
 }
+#Sub {
+    width: 200px;
+    height: 50px;
+    border-radius: 7px;
+    background-color: white;
+    color: black;
+    font-size: 20px;
+    border-style: none;
+  }
+  
+  #Sub:hover::after {
+    visibility: visible;
+  }
+  #Sub:hover{
+    height: 100px;
+    width: 400px;
+    background-color: white; 
+    color: black; 
+  }
+  
+  #Sub::before {
+    content:"Subscription";
+    display: block;
+    font-size:30px;
+  }
+  
+  #Sub::after {
+    content: "Nutrition Plan (6 Months)\AWorkout Plan (3 Months)";
+    display: block;
+    color: black;
+    white-space:pre;
+    visibility: hidden;
+  }
 
 .order-history li {
     margin-bottom: 5px;
@@ -530,6 +573,88 @@ h2, h3 {
 }
 
 
+
+.radio-button-container {
+    display: inline;
+    align-items: center;
+    gap: 30px;
+  }
+  
+  .radio-button {
+    display: inline;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .radio-button__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .radio-button__label {
+    display:inline;
+    padding-left: 40px;
+    margin-bottom: 15px;
+    margin-top:15px;
+    position: relative;
+    font-size: 20px;
+    color: #000000;
+    font-weight: 1000;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+  }
+  
+  .radio-button__custom {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #555;
+    transition: all 0.3s ease;
+  }
+  
+  .radio-button__input:checked + .radio-button__label .radio-button__custom {
+    background-color: #8500d2;
+    border-color: transparent;
+    transform: scale(0.8);
+    box-shadow: 0 0 20px #8500d2;
+  }
+  
+  .radio-button__input:checked + .radio-button__label {
+    color: #8500d2;
+  }
+  
+  .radio-button__label:hover .radio-button__custom {
+    transform: scale(1.2);
+    border-color: #8500d2;
+    box-shadow: 0 0 20px #8500d2;
+  }
+
+
+.space{
+    height:200px;
+}
+  
+
+
+.order-history{
+    background-color:rgb(203, 203, 203);
+    border-radius:10px;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    margin:auto;
+}
+  
+  
+  
+  
+  
 
 
 
