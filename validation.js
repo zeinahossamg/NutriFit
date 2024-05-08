@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const holderNameInput = document.getElementById('holderName');
     const expiryInput = document.getElementById('expiry');
     const cvvInput = document.getElementById('cvv');
+    const emailInput = document.getElementById('email'); // Add email input
 
     // Function to validate card number
     cardNumberInput.addEventListener('input', function () {
@@ -39,6 +40,17 @@ document.addEventListener("DOMContentLoaded", function () {
         const cvv = this.value.trim();
         if (cvv.length !== 3 || isNaN(cvv)) {
             this.setCustomValidity('CVV should contain exactly 3 digits');
+        } else {
+            this.setCustomValidity('');
+        }
+    });
+
+    // Function to validate email
+    emailInput.addEventListener('input', function () {
+        const email = this.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regular expression for email validation
+        if (!emailRegex.test(email)) {
+            this.setCustomValidity('Please enter a valid email address');
         } else {
             this.setCustomValidity('');
         }
