@@ -1,6 +1,6 @@
 
 function openHTMLFileNutrietion() {
-  window.open('CreateNP.html', '_self');
+  window.open('nutritionplans.html', '_self');
 }
 function openHTMLFileaccount() {
   window.open('account.html', '_self');
