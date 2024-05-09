@@ -69,7 +69,7 @@
   
   nav {
     background-color: var(--primary-color-dark);
-    position: sticky;
+    position: fixed;
     width: 100%;
     z-index: 9;
   }
@@ -78,6 +78,7 @@
     width: 100%;
     max-width: var(--max-width);
     margin-inline: auto;
+    
   }
   
   .navheader {
