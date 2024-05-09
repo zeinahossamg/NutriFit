@@ -234,7 +234,7 @@ aside{
     height: 100vh;
     padding-right: var(--card-padding);
     display: none;
-    animation: showMenu 400ms ease forwords;
+    animation: showMenu 400ms ease forwards;
 }
 @keyframes showMenu {
     to{

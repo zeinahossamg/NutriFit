@@ -614,13 +614,16 @@ function signup() {
     let newUser = new Client(nextUserId++, username, password,email);
     console.log(newUser);
     users.push(newUser);
-    showContent()
+    
    
     renderTableClassUsers();
-    
+    renderTableClassOrders();
+
+
     document.getElementById('signupEmail').value = '';
     document.getElementById('signupUsername').value = '';
     document.getElementById('signupPassword').value = '';
+    openHTMLFile();
 }
 function showContent() {
     event.preventDefault();
