@@ -1,3 +1,15 @@
+
+function openHTMLFileNutrietion() {
+  window.open('CreateNP.html', '_self');
+}
+function openHTMLFileaccount() {
+  window.open('account.html', '_self');
+}
+function openHTMLFilepayment() {
+  window.open('payment & Billing.html', '_self');
+}
+
+
 const menubtn = document.querySelector("#menu-btn"); 
 const navlinks = document.querySelector(".navlinks");
 const menubtnicon = menubtn.querySelector("i");

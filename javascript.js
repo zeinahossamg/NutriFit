@@ -560,7 +560,8 @@ function login() {
     }
 }
 function openHTMLFile() {
-    window.open('payment & Billing.html', '_blank');
+    window.open('homepage.html', '_self');
+
 }
 
 function signup() {
