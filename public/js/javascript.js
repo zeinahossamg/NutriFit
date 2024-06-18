@@ -22,7 +22,7 @@ function confirmSignOut(){
 
 
 
-    showLoginContent('Log-SignContainer');
+    window.open('/signin-signup.ejs', '_self');
 
 }
 
@@ -407,7 +407,7 @@ function deleteOrder() {
     closePopup('deletePopupOrder');
 
     // Render the updated table of orders
-    renderTableClassOrders();
+    
 }
 
 function renderTableClassOrders() {
@@ -549,21 +549,29 @@ function login() {
         document.getElementById('loginError').classList.add('hidden');
         document.getElementById('loginUsername').classList.remove('error-input');
     document.getElementById('loginPassword').classList.remove('error-input');
-        showContent()
+    openHTMLFileAdmin();
         renderTableClassOrders();
         addRecentViewer(user);
     } else if(user && user.role == "Client"){
-        openHTMLFile();
+        openHTMLFileclient();
 
     } else {
         document.getElementById('loginError').classList.remove('hidden');
     }
 }
-function openHTMLFile() {
+function openHTMLFileclient() {
     window.open('homepage.html', '_self');
 
 }
+function openHTMLFileAdmin() {
+    window.open('index.html', '_self');
 
+}
+function showContent() {
+    event.preventDefault();
+    document.querySelector('.Log-SignContainer').classList.add('hidden');
+    document.querySelector('.container').classList.remove('hidden');
+}
 function signup() {
     
     event.preventDefault();
@@ -625,11 +633,7 @@ function signup() {
     document.getElementById('signupPassword').value = '';
     openHTMLFile();
 }
-function showContent() {
-    event.preventDefault();
-    document.querySelector('.Log-SignContainer').classList.add('hidden');
-    document.querySelector('.container').classList.remove('hidden');
-}
+
 function showLoginContent() {
     event.preventDefault();
     document.querySelector('.Log-SignContainer').classList.remove('hidden');

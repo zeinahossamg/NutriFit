@@ -1,0 +1,28 @@
+<aside>
+    <div class="top">
+        <div class="logo">
+            <i class="fa-solid fa-fire-flame-curved fa-2xl"></i>
+            <h2>Nutri<span class="dangerous">Fit<span></h2>
+        </div>
+        <div class="close"><span><i class="fa-solid fa-x fa-lg"></i></span></div>
+    </div>
+    <div class="sidebar">
+        <a href="/index.html" class="<%= currentpage === "index"? "active" :null %>"  >
+            <span><i class="fa-solid fa-shop fa-lg"></i></span>
+            <h1> Dashboard</h1>
+        </a>
+        <a href="/admin/user.ejs" class="<%= currentpage === "user"? "active" :null %>"> <span>
+                <i class="fa-solid fa-user-pen fa-lg"></i></span>
+            <h1> Edit Users</h1>
+        </a>
+        <a href="/admin/plan.ejs"  class="<%= currentpage === "plan"? "active" :null %>"> <span>
+            <i class="fa-solid fa-user-pen fa-lg"></i></span>
+        <h1> Edit Plan</h1>
+    </a>
+        <a href="/admin/signout.ejs" >
+            <i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i>
+            <h1> Sign out</h1>
+        </a>
+
+    </div>
+</aside>

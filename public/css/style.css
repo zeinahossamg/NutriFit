@@ -504,7 +504,10 @@ main .Tablelist a{
     overflow: auto;
     background-color: rgba(0,0,0,0.4);
 }
+#Sign-Out{
 
+    display: block;
+}
 .signOutpopup-container {
    
     position: fixed;

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>NutriFit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://kit.fontawesome.com/6866201b21.js" crossorigin="anonymous"></script>
+   
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+    <div class="container ">
+        <%- include('../components/navbar.ejs') %>
+        <main>
+    <div id="Sign-Out" class=" popup-container hidden   ">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup('Sign-Out')">&times;</span>
+            <h2>Sign Out</h2>
+            <p>Are you sure you want to sign out?</p>
+            <button class="editors" onclick="confirmSignOut()">Yes, Sign Out</button>
+            <button class="editors" onclick="closePopup('Sign-Out')">Cancel</button>
+        </div>
+        </div>
+    </main>
+    </div>
+</body>
+
+    <script src="/js/javascript.js"></script>

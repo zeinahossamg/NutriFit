@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>NutriFit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://kit.fontawesome.com/6866201b21.js" crossorigin="anonymous"></script>
+   
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body >
+
+   
+
+    <div class="container ">
+        
+<%- include('./components/navbar.ejs',{currentpage:"index"}) %>
+
+        <main id="content " >
+           <div   id="Dashboard" class="page">
+            <h1>Dashboard</h1>
+            <div class="insights">
+                <div class="sales">
+                    <span><i class="fa-solid fa-chart-simple fa-xl"></i></span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Total Sales</h3>
+                            <h1>$25,024</h1>
+                        </div>
+                        <div class="progress"> <svg>
+                                <circle cx='38' cy='38' r="36"></circle>
+                            </svg>
+                            <div class="number">
+                                <p>81%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Last 24 hours</small>
+                </div>
+                <div class="Users">
+                    <span><i class="fa-solid fa-users fa-xl"></i></span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Total Users</h3>
+                            <h1>5000</h1>
+                        </div>
+                        <div class="progress"> <svg>
+                                <circle cx='38' cy='38' r="36"></circle>
+                            </svg>
+                            <div class="number">
+                                <p>81%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Last 24 hours</small>
+                </div>
+
+
+            </div>
+
+            <div id="editOrders">
+            <div class="Tablelist">
+                <h2>Recent Orders</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product Number</th>
+                            <th>Plan</th>
+                            <th>Duration</th>
+                            <th>Payment</th>
+                            
+                            
+                        </tr>
+                    </thead>
+
+                    <tbody id="RecentOrdertable" >
+                        
+                        <% arr.forEach((item,index) => { %>
+                        <tr>
+                            <td><%= index +1 %> </td>
+                        <td><%= item.plan %> </td>
+                        <td><%= item.duration %> </td>
+                        <td><%= item.price %></td>        
+                            <% }) %> 
+                        </tr>
+                    </tbody>
+                </table>
+                <button id="addButtonOrder" class="editors" onclick="openPopup('addPopupOrder')">Add</button>
+                <button id="editButtonOrder" class="editors" onclick="openPopup('editPopupOrder')">Edit</button>
+                <button id="deleteButtonOrder" class="editors" onclick="openPopup('deletePopupOrder')">Delete</button>
+                        </div>
+
+                        <div id="addPopupOrder" class="popup-container">
+                            <div class="popup-content">
+                                <span class="close" onclick="closePopup('addPopupOrder')">&times;</span>
+                                <h2>Add Order</h2>
+
+                                <form action="/index.html" method="post">
+                                <input name="plan" type="text" id="newPlan"
+                                class="inputdata" placeholder="NewPlan"> <span id="newPlanError" class="error-message hidden">please enter basic or premium</span><br><br>
+                                <input name="duration" type="text" id="newDuration"
+                                class="inputdata" placeholder="newDuration"><span id="newDurationError" class="error-message hidden">Please enter Duration from 1 to 3 months</span><br><br>
+                                <button type="submit"  class="editors">Add</button>
+                            </form>
+                                
+                                
+                            </div>
+                            </div>
+                            <div id="editPopupOrder" class="popup-container">
+                                <div class="popup-content">
+                                    <span class="close" onclick="closePopup('editPopupOrder')">&times;</span>
+                                    <h2>Edit Order</h2>
+                                    <input type="text" id="Ordertoedit" 
+                                    class="inputdata" placeholder="ProductID"><span id="editIDError" class="error-message hidden">please enter id</span><br><br>
+                                <input type="text" id="newplanedit" 
+                                class="inputdata" placeholder="New plan"><span id="editPlanError" class="error-message hidden">please enter basic or premium</span><br><br>
+                                <input type="text" id="newDurationedit"
+                                class="inputdata" placeholder="editDuration"><span id="editDurationError" class="error-message hidden">Please enter Duration from 1 to 3 months</span><br><br>
+                                
+                                <button onclick="editOrder()" class="editors">Edit</button>
+                                </div>
+                            </div>
+                            <div id="deletePopupOrder" class="popup-container">
+                                <div class="popup-content">
+                                    <span class="close" onclick="closePopup('deletePopupOrder')">&times;</span>
+                                    <h2>Delete Data</h2>
+                                    <p>please enter id for deletion</p>
+                                   
+                                    <form action="/index.html?_method=DELETE" method="post">
+                                    <input type="text" id="OrderIDDelete" 
+                                    class="inputdata" placeholder="ID">
+                                    <span id="DeleteIDError" class="error-message hidden">Please enter correct ID to delete</span><br><br>
+                                    <button type="submit" onclick="deleteOrder()" class="editors">Delete</button>
+                                </form>
+                                </div>
+                            </div>
+            </div>
+
+
+        </div>
+
+
+
+
+        
+
+
+
+
+
+       
+
+
+      
+        </main>
+
+
+
+
+
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <i class="fa-solid fa-bars fa-2xl"></i>
+                </button>
+                
+                <div class="profile">
+                    <div class=" info">
+                        <p>hey, <b>ismail</b></p>
+                        <small class="text-muted">Admin</small>
+                    </div>
+                    <div >
+                        <i class="fa-regular fa-user fa-2xl"></i>
+                    </div>
+                </div>
+
+            </div>
+<div class="recent-viewer">
+<h2> Recent visitors</h2>
+<div class="visitors">
+    <div class="visitor">
+        <div >
+            <i class="fa-regular fa-user fa-lg"></i>        </div>
+        <div class="visited">
+            <p>ismail has visited the website</p>
+            <small class="text-muted"> 2 minutes ago</small>
+        </div>
+    </div>
+
+
+    <div class="visitor">
+        <div >
+            <i class="fa-regular fa-user fa-lg"></i>        <div class="visited">
+            <p>youssef has visited the website</p>
+            <small class="text-muted"> 2 minutes ago</small>
+        </div>
+    </div>
+
+
+    <div class="visitor">
+        <div >
+            <i class="fa-regular fa-user fa-lg"></i>        </div>
+        <div class="visited">
+            <p>mohanad has visited the website</p>
+            <small class="text-muted"> 2 minutes ago</small>
+        </div>
+    </div>
+
+    <div class="visitor">
+        <div >
+            <i class="fa-regular fa-user fa-lg"></i>        </div>
+        <div class="visited">
+            <p>zeina has visited the website</p>
+            <small class="text-muted"> 2 minutes ago</small>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+        </div>
+
+        
+
+
+        </div>
+    </div>
+</body>
+<script src="js/javascript.js"></script>
+
+</html>
