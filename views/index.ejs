@@ -65,30 +65,37 @@
             <div id="editOrders">
             <div class="Tablelist">
                 <h2>Recent Orders</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Product Number</th>
-                            <th>Plan</th>
-                            <th>Duration</th>
-                            <th>Payment</th>
-                            
-                            
-                        </tr>
-                    </thead>
+                <% if (arr.length === 0) { %>
+                 <h1 style="text-align: center ; margin-bottom: 4rem ;"> No Data Available</h1>
+                <% } else {  %>
 
-                    <tbody id="RecentOrdertable" >
-                        
-                        <% arr.forEach((item,index) => { %>
-                        <tr>
-                            <td><%= index +1 %> </td>
-                        <td><%= item.plan %> </td>
-                        <td><%= item.duration %> </td>
-                        <td><%= item.price %></td>        
-                            <% }) %> 
-                        </tr>
-                    </tbody>
-                </table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product Number</th>
+                                <th>Plan</th>
+                                <th>Duration</th>
+                                <th>Payment</th>
+                                
+                                
+                            </tr>
+                        </thead>
+    
+                        <tbody id="RecentOrdertable" >
+                            
+                            <% arr.forEach((item,index) => { %>
+                            <tr>
+                                <td><%= index +1 %> </td>
+                            <td><%= item.plan %> </td>
+                            <td><%= item.duration %> </td>
+                            <td><%= item.price %></td>        
+                                <% }) %> 
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <% }%>
+                
                 <button id="addButtonOrder" class="editors" onclick="openPopup('addPopupOrder')">Add</button>
                 <button id="editButtonOrder" class="editors" onclick="openPopup('editPopupOrder')">Edit</button>
                 <button id="deleteButtonOrder" class="editors" onclick="openPopup('deletePopupOrder')">Delete</button>
@@ -114,14 +121,17 @@
                                 <div class="popup-content">
                                     <span class="close" onclick="closePopup('editPopupOrder')">&times;</span>
                                     <h2>Edit Order</h2>
-                                    <input type="text" id="Ordertoedit" 
+                                    <form action="/index.html?_method=PUT" method="post">
+
+                                    <input type="text" id="Ordertoedit" name="Ordertoedit"
                                     class="inputdata" placeholder="ProductID"><span id="editIDError" class="error-message hidden">please enter id</span><br><br>
-                                <input type="text" id="newplanedit" 
+                                <input type="text" id="newplanedit" name="plan"
                                 class="inputdata" placeholder="New plan"><span id="editPlanError" class="error-message hidden">please enter basic or premium</span><br><br>
-                                <input type="text" id="newDurationedit"
+                                <input type="text" id="newDurationedit" name="duration"
                                 class="inputdata" placeholder="editDuration"><span id="editDurationError" class="error-message hidden">Please enter Duration from 1 to 3 months</span><br><br>
                                 
                                 <button onclick="editOrder()" class="editors">Edit</button>
+                                </form>
                                 </div>
                             </div>
                             <div id="deletePopupOrder" class="popup-container">
@@ -131,7 +141,7 @@
                                     <p>please enter id for deletion</p>
                                    
                                     <form action="/index.html?_method=DELETE" method="post">
-                                    <input type="text" id="OrderIDDelete" 
+                                    <input type="text" id="OrderIDDelete" name="OrderIDDelete"
                                     class="inputdata" placeholder="ID">
                                     <span id="DeleteIDError" class="error-message hidden">Please enter correct ID to delete</span><br><br>
                                     <button type="submit" onclick="deleteOrder()" class="editors">Delete</button>

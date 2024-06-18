@@ -375,16 +375,14 @@ function editOrder() {
     // Update the order with new values
     
 
-    let newOrder = new Order(orderId,newPlan,newDuration);
-    const index = Orders.findIndex(order => order.planID === orderId);
-    Orders[index] = newOrder;
+   
 
 
     // Close the popup after editing the order
     closePopup('editPopupOrder');
 
     // Render the updated table of orders
-    renderTableClassOrders();
+    
 }
 
 function deleteOrder() {
