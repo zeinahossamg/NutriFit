@@ -280,18 +280,21 @@ main{
 
 main .Tablelist {
 
-position: relative;
-margin: 3rem 0 0 0;
-width: 100%;
-
-
-}
-
-main .Tablelist table {
-
+    position: relative;
+    margin: 3rem 0 0 0;
     width: 100%;
-    margin: 0;
-}
+    
+    
+    }
+    
+    main .Tablelist table {
+    
+        width: 100%;
+        margin: 0;
+    }
+
+
+
 .right{
     width: 94%;
     margin: 0 auto 4rem;
@@ -449,7 +452,16 @@ main .Tablelist h2{
 
     margin-bottom: 0.8rem;
 }
+
+.table-container {
+    
+    max-height: 370px; /* Set a larger maximum height for the table container */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    overflow-x: hidden; /* Disable horizontal scrolling */
+     /* Optional: Add border for better visibility */
+}
 main .Tablelist table{
+ 
 
     background: var(--color-white);
     width: 100%;
@@ -477,6 +489,61 @@ main .Tablelist a{
     display: block;
     margin:1rem auto;
 }
+main .Tablelist {
+    margin-top: 2rem;
+}
+
+main .Tablelist h2{
+
+    margin-bottom: 0.8rem;
+}
+
+
+
+
+/*------------------------------------*/
+
+
+ .Tablelist {
+    margin-top: 2rem;
+}
+
+ .Tablelist h2{
+
+    margin-bottom: 0.8rem;
+}
+
+
+ .Tablelist table{
+ 
+margin: auto;
+    background: var(--color-white);
+    width: 90%;
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    text-align: center;
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+}
+
+ .Tablelist table:hover{
+    box-shadow: none;
+}
+ table tbody td{
+    height: 2.8rem;
+    border-bottom: 1px solid var(--color-light);
+    color: var(--color-dark);
+}
+ table tbody tr:last-child td {
+    border:none;
+}
+
+ .Tablelist a{
+    text-align: center;
+    display: block;
+    margin:1rem auto;
+}
+
 .editors{
 
     background: var(--color-primary);
@@ -494,15 +561,15 @@ main .Tablelist a{
     cursor: pointer;
 }
 .popup-container {
-    display: none;
+    
     position: fixed;
-    z-index: 1;
+    
     left: 0;
-    top: 0;
+    top:350px;
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.4);
+   
 }
 #Sign-Out{
 

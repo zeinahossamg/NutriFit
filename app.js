@@ -9,13 +9,26 @@ const methodOverride = require("method-override");
 const orderRoutes = require("./routes/index");
 const adminRoutes = require("./routes/admin");
 const authRoutes = require("./routes/auth");
+const session = require('express-session');
+app.use(express.json());
+const MainorderRoutes = require("./routes/Orders");
+
+app.use(session({
+  secret: 'yourSecretKey', // Change this to a strong, unique secret
+  resave: false,
+  saveUninitialized: false
+}));
 
 // Middleware
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
+
 app.use(express.static("public"));
 app.use(connectLivereload());
 app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
+
+
+
 
 // Livereload setup
 const liveReloadServer = livereload.createServer();
@@ -30,6 +43,11 @@ liveReloadServer.server.once("connection", () => {
 app.use("/", orderRoutes);
 app.use("/admin", adminRoutes);
 app.use("/", authRoutes);  // or app.use("/auth", authRoutes) depending on your preference
+
+app.use("/Orders-Crud", MainorderRoutes);
+
+
+
 
 // MongoDB connection
 mongoose
