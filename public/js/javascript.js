@@ -276,6 +276,7 @@ let Orders =[];
 
 
 function addOrder(event) {
+
     event.preventDefault();
 
     let newPlan = document.getElementById('newPlan').value;
@@ -308,14 +309,15 @@ function addOrder(event) {
         }
         return;
     }
-
+console.log(newPlan);
+console.log("here");
     // If validation passes, proceed to send data to the server
-    fetch('/Orders-Crud/AddOrders', {
+    fetch('AddOrders', { 
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({newPlan : newPlan, newDuration : newDuration })
+        body: JSON.stringify({plan : newPlan, duration : newDuration })
     })
     .then(response => {
         if (!response.ok) {
@@ -323,7 +325,8 @@ function addOrder(event) {
         }
         console.log('Order added successfully');
         // Optionally handle success message display or UI updates
-        window.location.href = "/index.html";  // Redirect after successful addition
+          // Redirect after successful addition
+          window.location.href = "/index.html";
     })
     .catch(error => {
         console.error('Error adding order:', error);
@@ -368,25 +371,31 @@ function editOrder(event) {
     }
 
     // Perform AJAX request to update order
-    fetch(`/Orders-Crud/EditOrders?_method=PUT`, {
-        method: 'PUT',
+    fetch(`EditOrders?_method=PUT`, { 
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ Ordertoedit : orderId ,plan: newPlan, duration: newDuration })
     })
     .then(response => {
+        console.log(response);
         if (!response.ok) {
             throw new Error('Network response was not ok');
+        }else{
+            console.log('Order updated successfully');
+            // Optionally handle success message display or UI updates
+              // Redirect after successful update
+              window.location.href = "/index.html";
         }
-        console.log('Order updated successfully');
-        // Optionally handle success message display or UI updates
-        window.location.href = "/index.html";  // Redirect after successful update
+        
     })
     .catch(error => {
         console.error('Error updating order:', error);
-        // Handle error messages if needed
-        alert('Failed to update order. Please try again.');
+        
+        document.getElementById('editIDError').textContent = 'Please enter a valid order ID';
+
+        document.getElementById('editIDError').classList.remove('hidden');
     });
 }
 
@@ -396,14 +405,14 @@ function deleteOrder(event) {
 
     let orderIdToDelete = parseInt(document.getElementById('OrderIDDelete').value);
 
-    if (isNaN(orderIdToDelete) || orderIdToDelete <= 0) {
-        console.log("Invalid orderIdToDelete:", orderIdToDelete);
+    if (isNaN(orderIdToDelete) || orderIdToDelete <= 0 ) {
+        console.log("front endInvalid orderIdToDelete:", orderIdToDelete);
         document.getElementById('DeleteIDError').classList.remove('hidden');
         return;
     }
 
    
-    fetch(`/Orders-Crud/DeleteOrders?_method=DELETE`, {
+    fetch(`DeleteOrders?_method=DELETE`, {
         method: 'POST',  // Since you're using method override, change the method to post
         headers: {
             'Content-Type': 'application/json'
@@ -411,17 +420,20 @@ function deleteOrder(event) {
         body: JSON.stringify({ OrderIDDelete: orderIdToDelete })
     })
     .then(response => {
+        console.log(response);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
         console.log('Order deleted successfully');
         // Optionally handle success message display or UI updates
-        window.location.href = "/index.html";  // Redirect after successful deletion
+         // Redirect after successful deletion
+         window.location.href = "/index.html";
     })
     .catch(error => {
         console.error('Error deleting order:', error);
         // Handle error messages or UI updates for failure
         // Example: Display error message to user
+        
         document.getElementById('DeleteIDError').classList.remove('hidden');
     });
 }

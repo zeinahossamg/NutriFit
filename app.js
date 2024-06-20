@@ -11,8 +11,10 @@ const adminRoutes = require("./routes/admin");
 const authRoutes = require("./routes/auth");
 const session = require('express-session');
 app.use(express.json());
+const cors = require('cors');
 const MainorderRoutes = require("./routes/Orders");
 
+app.use(cors());
 app.use(session({
   secret: 'yourSecretKey', // Change this to a strong, unique secret
   resave: false,

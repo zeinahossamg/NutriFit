@@ -30,6 +30,42 @@ exports.getIndex = async (req, res) => {
   }
 };
 
+
+exports.createOrder = async (req, res) => {
+  const { plan, duration } = req.body;
+
+  try {
+      // Validate input fields (if needed)
+      if (!plan || !duration) {
+          console.error('Invalid input data fro add');
+          req.session.message = 'Invalid input data for adding';
+          req.session.success = false;
+          res.status(400).redirect("Orders-Crud/AddOrders");
+      }
+
+      // Create a new order instance
+      const order = new Order({ plan, duration });
+      await order.save();
+      console.log('Order created successfully');
+
+      // Set success message
+      req.session.message = "Order created successfully";
+      req.session.success = true;
+
+      // Redirect after successful creation
+      res.status(302).redirect("/index.html");
+
+  } catch (err) {
+      console.error('Error creating order:', err);
+      req.session.message = 'Internal Server Error';
+      req.session.success = false;
+      
+      // Redirect to index.html with error status
+       res.status(500).send('Internal Server Error');
+  }
+};
+
+
 exports.updateOrder = async (req, res) => {
   const orderIndex = parseInt(req.body.Ordertoedit, 10) - 1;
   const { plan, duration } = req.body;
@@ -40,12 +76,12 @@ exports.updateOrder = async (req, res) => {
     const ordersArray = await Order.find({});
     
     // Validate orderIndex
-    if (isNaN(orderIndex) || orderIndex < 0 || orderIndex >= ordersArray.length) {
+    if (isNaN(orderIndex) || orderIndex < 0 || orderIndex> ordersArray.length ) {
       console.error('Invalid order index:', orderIndex);
       req.session.message = 'Invalid order index';
       req.session.success = false;
       console.log('Session success message:', req.session.success);
-      res.redirect("/Orders-Crud/EditOrders");
+       return res.status(400).redirect("Orders-Crud/EditOrders");
     } else{
 
       const orderId = ordersArray[orderIndex]._id;
@@ -59,7 +95,8 @@ exports.updateOrder = async (req, res) => {
       req.session.success = true;
   
       // Redirect after successful update
-      res.redirect("/index.html");
+
+      res.status(302).redirect("/index.html");
     }
 
     
@@ -72,48 +109,17 @@ exports.updateOrder = async (req, res) => {
     req.session.success = false;
 
     // Redirect to index.html with error status
-    res.status(500).send('Internal Server Error');
+    return res.status(500).send('Internal Server Error');
   }
 };
 
 
-exports.createOrder = async (req, res) => {
-  const { plan, duration } = req.body;
 
-  try {
-    // Validate input fields (if needed)
-    if (!plan || !duration ) {
-      console.error('Invalid input data');
-      console.log(plan,duration)
-      req.session.message = 'Invalid input data';
-      req.session.success = false;
-      res.redirect("/Orders-Crud/AddOrders");
-    }else{
-
-      const Order = new Order({ plan, duration });
-      await Order.save();
-      console.log('Order created successfully');
-  
-      req.session.message = "Order created successfully";
-      req.session.success = true;
-      res.redirect("/index.html");
-
-    }
-
-    
-
-  } catch (err) {
-    console.error('Error creating order:', err);
-    req.session.message = 'Internal Server Error';
-    req.session.success = false;
-    res.redirect("/index.html");
-  }
-};
 
 
 exports.deleteOrder = async (req, res) => {
   const orderIndex = parseInt(req.body.OrderIDDelete, 10) - 1;
-console.log("backend delte");
+
   try {
     // Fetch the current orders array
     const ordersArray = await Order.find({});
@@ -121,11 +127,11 @@ console.log("backend delte");
    
     // Validate orderIndex
     if (isNaN(orderIndex) || orderIndex < 0 || orderIndex >= ordersArray.length) {
-      console.error('Invalid order index:', orderIndex);
+      console.error('backend Invalid order index:', orderIndex );
       req.session.message = 'Invalid order index ';
       req.session.success = false;
       console.log('Session success message:', req.session.success);
-      res.redirect("/Orders-Crud/DeleteOrders");
+      return res.status(400).redirect("Orders-Crud/DeleteOrders");
 
     } else{
 
@@ -139,13 +145,13 @@ console.log("backend delte");
       req.session.success = true;
 
     // Redirect after deletion
-    res.redirect("/index.html");
+     res.status(302).redirect("/index.html");
     }
 
   } catch (err) {
     console.error('Error deleting order:', err);
    
-    res.redirect("/index.html");
+    return res.status(500).send('Internal Server Error');
   }
 };
 
