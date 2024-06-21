@@ -292,20 +292,22 @@ tbody tr:nth-child(even) {
 .af{
     justify-content: center;
     align-items: center;
-    padding: 50px;
+    padding: 60px;
     background-color: white;
     height: 300px;
     border-radius: 5px;
     width: 300px;
     margin: auto; /* Add this line to center horizontally */
     position: absolute; /* Add this line to center vertically */
-    top: 280px;
+    top: 180px;
     bottom: 300;
     left: 0;
     right: 0;
 }
 .resultsDiv{
     color:white;
+    margin-top:700px;
+    border-radius:10px;
 }
 .nform::before {
         content: 'Ready To Your Uniqe Plan?';
@@ -410,6 +412,14 @@ tbody tr:nth-child(even) {
     box-sizing:border-box;
     margin:10px;
 }
+#foodItem{
+    width:100%;
+    padding:10px;
+    border:1px solid;
+    border-radius:3px;
+    box-sizing:border-box;
+    margin:10px;
+}
 
 
 
@@ -473,6 +483,33 @@ tbody tr:nth-child(even) {
     margin-top:55px;
 }
 
+#addItemButton{
+    --glow-color: #8500d2;
+    --glow-spread-color: rgba(132, 0, 255, 0.781);
+    --enhanced-glow-color: rgb(67, 0, 129);
+    --btn-color: rgb(255, 255, 255);
+    border: .25em solid var(--glow-color);
+    padding: 1em 3em;
+    color: var(--glow-color);
+    font-size: 15px;
+    font-weight: bold;
+    background-color: var(--btn-color);
+    border-radius: 1em;
+    outline: none;
+    box-shadow: 0 0 1em .25em var(--glow-color),
+           0 0 4em 1em var(--glow-spread-color),
+           inset 0 0 .75em .25em var(--glow-color);
+    text-shadow: 0 0 .5em var(--glow-color);
+    position: relative;
+    transition: all 0.3s;
+    margin-top:250px;
+    margin-left:60px;
+}
+
+#addItemButton:hover{
+    cursor:pointer;
+}
+
 #GB:hover{
    cursor:pointer;
 }
@@ -495,14 +532,7 @@ tbody tr:nth-child(even) {
     border-radius:10px;
 }
 
-#foodInput{
-    width:100%;
-    padding:10px;
-    border:1px solid;
-    border-radius:3px;
-    box-sizing:border-box;
-    margin:10px;
-}
+
 
 
 /* .accountform{
@@ -749,6 +779,34 @@ h2,h3,p{
 
 
   
+
+.nutrition-table {
+    width: 70%;
+    border-collapse: collapse;
+    color:black;
+    border-radius:20px;
+    margin:auto;
+}
+
+.nutrition-table th, .nutrition-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+    
+}
+
+.nutrition-table th {
+    background-color: #f2f2f2;
+}
+
+.white-row {
+    background-color: white;
+}
+
+.grey-row {
+    background-color: #f9f9f9;
+}
+
   
   
   
