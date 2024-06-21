@@ -28,20 +28,20 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(data => {
                 console.log('Data:', data);
                 f.push(data);
-                console.log(f[0].foods[0].nf_protein/f[0].foods[0].serving_weight_grams);
+                const pg=f[0].foods[0].nf_protein/f[0].foods[0].serving_weight_grams;
+                console.log(pg);
+                const pte=209.25;
+                const pbd=((pte/3))/2;
+                console.log(pbd);
+                const pm=((pte/3)*2);
+                const toeat=pm*pg;
+                const grr=toeat/pg;
+                console.log("should eat protein at lunch meals: ",toeat);
+                console.log("grams of chicken breast: ",grr);
                 console.log(f[0].foods[0].nf_calories);
                 displayData(f);
 
-                // Append data to extraDiv
-                // foodItemd.innerHTML = `
-                //     <p><strong>Item ${index + 1}</strong></p>
-                //     <p>Food Name: ${food.food_name}</p>
-                //     <p>Calories: ${food.nf_calories}</p>
-                //     <p>Serving: ${food.serving_weight_grams} Gram</p>
-                // `;
-                // extraDiv.appendChild(dataDiv);
-                // })
-                //extraDiv.innerHTML = JSON.stringify(data, null, 2);
+                
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -95,6 +95,17 @@ function displayData(f) {
     extraDiv.appendChild(table);
 }
 
+
+// Append data to extraDiv
+                // foodItemd.innerHTML = `
+                //     <p><strong>Item ${index + 1}</strong></p>
+                //     <p>Food Name: ${food.food_name}</p>
+                //     <p>Calories: ${food.nf_calories}</p>
+                //     <p>Serving: ${food.serving_weight_grams} Gram</p>
+                // `;
+                // extraDiv.appendChild(dataDiv);
+                // })
+                //extraDiv.innerHTML = JSON.stringify(data, null, 2);
 
 
 
