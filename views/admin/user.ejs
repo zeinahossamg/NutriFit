@@ -31,68 +31,34 @@
                         </tr>
                     </thead>
                     <tbody id="USERTABLE" >
-                        
-                         
-                    </tbody>
+                
+                
+                        <% arr.forEach((item,index) => { %>
+                        <tr>
+                            <td><%= index +1 %> </td>
+                        <td><%= item.username %> </td>
+                        <td><%= item.password %> </td>
+                        <td><%= item.email %></td>  
+                        <td><%= item.role %></td>       
+                            <% }) %> 
+                        </tr>
+                     
+                     
+                </tbody>
                     
                 </table>
                 </div>
-                <button id="addButton" class="editors" onclick="openPopup('addPopup')">Add</button>
-        <button id="editButton" class="editors" onclick="openPopup('editPopup')">Edit</button>
-        <button id="deleteButton" class="editors" onclick="openPopup('deletePopup')">Delete</button>
+                <button id="addButton" class="editors" onclick="window.location.href ='AddUsers'" >Add</button>
+        <button id="editButton" class="editors" onclick="window.location.href ='EditUsers'" >Edit</button>
+        <button id="deleteButton" class="editors" onclick="window.location.href ='DeleteUsers'">Delete</button>
             </div>
-            <div id="addPopup" class="popup-container">
-                <div class="popup-content">
-                    <span class="close" onclick="closePopup('addPopup')">&times;</span>
-                    <h2>Add Data</h2>
-                    <input type="text" id="newUsername" 
-                    class="inputdata" placeholder="Username">
-                    <br><br>
-        
-                    <input type="password" id="newPassword"
-                    class="inputdata" placeholder="Password"><span id="AddPasswordError" class="error-message hidden">Password is not safe. It must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.</span><br><br>
-        
-                    <input type="Email" id="newEmail"
-                    class="inputdata" placeholder="Email"><span id="AddErrorEmail" class="error-message hidden">email already in use</span><br><br>
-        
-                    <input type="text" id="newRole"
-                    class="inputdata" placeholder="Role"><span id="AddRoleError" class="error-message hidden">please enter Admin or Client</span><br><br>
-                    
-                    <button onclick="addData()" class="editors">Add</button>
-                </div>
-                </div>
-                <div id="editPopup" class="popup-container">
-                    <div class="popup-content">
-                        <span class="close" onclick="closePopup('editPopup')">&times;</span>
-                        <h2>Edit Data</h2>
-                        <input type="text" id="UserIdedit" 
-                        class="inputdata" placeholder="ID"><span id="EditErrorId" class="error-message hidden">User not found!</span><br><br>
-        
-                        
-                    <input type="password" id="newPasswordedit" 
-                    class="inputdata" placeholder="Password"><span id="EditErrorPassword" class="error-message hidden">Password is not safe. It must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.</span><br><br>
-        
-                    <input type="Email" id="newEmailedit"
-                    class="inputdata" placeholder="Email"><span id="EditErrorEmail" class="error-message hidden">email is incorrect</span><br><br>
-        
-                    <input type="text" id="newRoleedit"
-                    class="inputdata" placeholder="Role"><span id="EditErrorRole" class="error-message hidden"></span><br><br>
-        
-                    
-        
-                    <button onclick="editData()" class="editors">Edit</button>
-                    </div>
-                </div>
-                <div id="deletePopup" class="popup-container">
-                    <div class="popup-content">
-                        <span class="close" onclick="closePopup('deletePopup')">&times;</span>
-                        <h2>Delete Data</h2>
-                        <p>please enter id for deletion</p>
-                        <input type="text" id="ID" 
-                        class="inputdata" placeholder="ID"><span id="DeleteErrorId" class="error-message hidden">Id not found </span><br><br>
-                        <button onclick="deleteData()" class="editors">Delete</button>
-                    </div>
-                </div>
+            
+            <% if (success) { %>
+                <h1 ><%= message %></h1>
+            <% } else { %>
+                <h1><%= message %></h1>
+            <% } %>
+               
             </div>
 
     </main>

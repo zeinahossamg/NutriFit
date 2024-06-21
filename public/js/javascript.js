@@ -439,46 +439,6 @@ function deleteOrder(event) {
 }
 
 
-function renderTableClassOrders() {
-    document.getElementById('RecentOrdertable').innerHTML = '';
-    Orders.forEach(order => {
-        const tr = document.createElement('tr');
-    
-        const trcontent = `
-        <td>${order.planID}</td>
-        <td>${order.planType}</td>
-        <td>${order.duration}</td>
-        <td>${order.price}</td>
-        
-        
-        `;
-    
-        tr.innerHTML = trcontent;
-        
-       
-document.getElementById('RecentOrdertable').appendChild(tr);
-    });
-}
-class User {
-    constructor(id, username, password, role, email) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.role = role;
-        this.email = email; // New property for email
-    }
-}
-class Client extends User {
-    constructor(id, username, password, email) {
-        super(id, username, password, 'Client', email);
-    }
-}
-
-class Admin extends User {
-    constructor(id, username, password, email) {
-        super(id, username, password, 'Admin', email);
-    }
-}
 
 function isPasswordSafe(password) {
     // Password must be at least 8 characters long and contain at least one uppercase letter,
@@ -668,7 +628,11 @@ function showLoginContent() {
     document.querySelector('.Log-SignContainer').classList.remove('hidden');
     document.querySelector('.container').classList.add('hidden');
 }
-function addData() {
+
+
+function addData(event) {
+    
+    event.preventDefault();
     let newUsername = document.getElementById('newUsername').value;
     let newPassword = document.getElementById('newPassword').value;
     let newRole = document.getElementById('newRole').value;
@@ -679,12 +643,6 @@ function addData() {
     document.getElementById('AddErrorEmail').classList.add('hidden');
 
 
-
-    const existingEmail = users.find(user => user.email === newemail);
-    if (existingEmail) {
-        document.getElementById('AddErrorEmail').classList.remove('hidden');
-        return;
-    }
     if (newUsername === "" || newPassword === "" || newRole === "" || newemail === "") {
         document.getElementById('AddRoleError').textContent = 'fill User Data';
         document.getElementById('AddRoleError').classList.remove('hidden');
@@ -694,6 +652,7 @@ function addData() {
 
         document.getElementById('AddPasswordError').classList.remove('hidden');
 return;
+
     }
     if(!isEmailValid(newemail)){
         document.getElementById('AddErrorEmail').textContent = 'Please enter correct Email';
@@ -707,28 +666,38 @@ return;
         return;
     }
     
-    let newUser;
-    if (newRole == "Admin") {
-        newUser = new Admin(nextUserId++, newUsername, newPassword,newemail);
-    } else {
-        newUser = new Client(nextUserId++, newUsername, newPassword,newemail);
-    }
-
-    users.push(newUser);
-
-    console.log('Adding new data:', newUser);
-    console.log(users);
+    
+    console.log("hello");
 console.log(newRole);
-    // Close the popup after adding data
-    closePopup('addPopup');
 
-    renderTableClassUsers();
+fetch('AddUsers', { 
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ username : newUsername, password :  newPassword, email: newemail, role: newRole })
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    console.log('User added successfully');
+    // Optionally handle success message display or UI updates
+    // Redirect after successful addition
+    window.location.href = "user.ejs";
+})
+.catch(error => {
+    console.error('Error adding user:', error);
+    // Handle error scenario on the client side, if needed
+});
 }
 
-function editData() {
+function editData(event) {
+
+  event.preventDefault();
     let editUserId = parseInt(document.getElementById('UserIdedit').value);
-    let newPassword = document.getElementById('newPasswordedit').value;
-    let newRole = document.getElementById('newRoleedit').value;
+    const newPassword = document.getElementById('newPasswordedit').value;
+    const newRole = document.getElementById('newRoleedit').value;
     let newEmail = document.getElementById('newEmailedit').value;
 
     document.getElementById('EditErrorId').classList.add('hidden');
@@ -736,17 +705,15 @@ function editData() {
 
     document.getElementById('EditErrorRole').classList.add('hidden');
 
-    const userToEdit = users.find(user => user.id === editUserId);
+   
 
     if (editUserId === "" || newPassword === "" || newRole === "" || newEmail === "") {
         document.getElementById('EditErrorRole').textContent = 'fill User Data';
         document.getElementById('EditErrorRole').classList.remove('hidden');
+        console.log(editUserId,newEmail,"Frontend");
         return;
     }
-    if (!userToEdit) {
-        document.getElementById('EditErrorId').classList.remove('hidden');
-        return;
-    }
+    
     if(!isPasswordSafe(newPassword)){
         document.getElementById('EditErrorPassword').classList.remove('hidden');
         return;
@@ -760,61 +727,79 @@ function editData() {
         document.getElementById('EditErrorRole').classList.remove('hidden');
         return;
     }
-    
 
-    // If the user is an Admin, create an Admin object; otherwise, create a User object
-    let editedUser;
-    if (userToEdit instanceof Admin) {
-        editedUser = new Admin(userToEdit.id, userToEdit.username, newPassword,newEmail);
-    } else {
-        editedUser = new Client(userToEdit.id, userToEdit.username, newPassword,newEmail);
-    }
+    console.log("hello");
+console.log(editUserId,newEmail,"Frontend");
 
-    
-    const index = users.findIndex(user => user.id === editUserId);
-    users[index] = editedUser;
 
-    console.log('Editing data:', editedUser);
-    console.log(users);
+    fetch(`/admin/EditUsers?_method=PUT`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ UserIdedit : editUserId, password: newPassword, email: newEmail, role: newRole })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        console.log('User edited successfully');
+        // Optionally handle success message display or UI updates
+        // Redirect after successful edit
+        window.location.href = "/admin/user.ejs";
+    })
+    .catch(error => {
+        console.error('Error editing user:', error);
+        // Handle error scenario on the client side, if needed
+    });
 
-    
-    closePopup('editPopup');
 
-  
-    renderTableClassUsers();
+ 
 }
 
-function deleteData() {
+function deleteData(event) {
+    event.preventDefault();
+
     let deleteUserId = parseInt(document.getElementById('ID').value);
 
+    // Hide error message initially
     document.getElementById('DeleteErrorId').classList.add('hidden');
 
-    const index = users.findIndex(user => user.id === deleteUserId);
-
-    if (index === -1) {
-        console.log("kjsdf")
+    // Validate input field
+    if (isNaN(deleteUserId) ) {
+        document.getElementById('DeleteErrorId').textContent = 'Please enter a valid user ID';
         document.getElementById('DeleteErrorId').classList.remove('hidden');
         return;
     }
-    users.splice(index, 1);
-    console.log('Deleting data:', deleteUserId);
-    console.log(users);
 
-    closePopup('deletePopup');
-
- 
-    renderTableClassUsers();
+    // Perform AJAX request to delete user
+    fetch(`/admin/DeleteUsers`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: deleteUserId })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        console.log('User deleted successfully');
+        // Optionally handle success message display or UI updates
+        // Redirect after successful deletion
+        window.location.href = "/admin/user.ejs";
+    })
+    .catch(error => {
+        console.error('Error deleting user:', error);
+        document.getElementById('DeleteErrorId').textContent = 'Error deleting user catch';
+        document.getElementById('DeleteErrorId').classList.remove('hidden');
+    });
 }
 
 
 
-let users =[];
 
-users.push(new Admin(1,'ismail','ismail123','ismail@gmail.com'));
-users.push(new Admin(2,'youssef','youssef123','youssef@gmail.com'));
-users.push(new Admin(3,'mohanad','mohanad123','mohand@gmail.com'));
-users.push(new Admin(4,'zeina','zeina123','zeina@gmail.com'));
-users.push(new Client(5,'Ahmed','Ahmed123','ahmed@gmail.com'));
+
 
 
 

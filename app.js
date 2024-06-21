@@ -47,7 +47,7 @@ app.use("/admin", adminRoutes);
 app.use("/", authRoutes);  // or app.use("/auth", authRoutes) depending on your preference
 
 app.use("/Orders-Crud", MainorderRoutes);
-
+app.use("/Users-Crud", adminRoutes );
 
 
 
