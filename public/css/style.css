@@ -4,7 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 :root {
 
---color-primary: #7380ec;
+--color-primary: #73ecea;
 --color-danger: #ff7782;
 --color-succes: #41f1b6;
 --color-warning: #ffbb55;
@@ -163,7 +163,7 @@ aside .close{
 
 aside .sidebar{
 border-radius: 15px;
-    background-color: #4416ccd0;
+    background-color: #1644ccd0;
  display: flex;
  flex-direction: column;
  height: 86vh;

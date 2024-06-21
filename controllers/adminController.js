@@ -1,6 +1,8 @@
 // controllers/adminController.js
 const Order = require("../models/mydataschema");
 const User = require("../models/users")
+const Plan = require("../models/plans")
+
 exports.renderUser = async (req, res) => {
 
   const UsersArray = await User.find({});
@@ -8,10 +10,17 @@ exports.renderUser = async (req, res) => {
     res.render("admin/user", { arr: UsersArray , success : req.session.success , message : req.session.message  });
   };
   
-  exports.renderPlan = (req, res) => {
-    res.render("admin/plan");
-  };
+  exports.renderPlan = async (req, res) => {
+
+    const PlansArray = await Plan.find({});
   
+      res.render("admin/plan", { arr: PlansArray , success : req.session.success , message : req.session.message  });
+    };
+  
+
+
+
+
   exports.renderSignout = (req, res) => {
     res.render("admin/signout");
   };
@@ -46,20 +55,20 @@ exports.renderUser = async (req, res) => {
 
 
   exports.renderAddPlans = async (req, res) => {
-    const UsersArray = await User.find({});
+    const PlansArray = await Plan.find({});
     
-    res.render('admin/Plan-Crud/AddPlans', { arr: UsersArray , success : req.session.success , message : req.session.message  });
+    res.render('admin/Plan-Crud/AddPlans', { arr: PlansArray , success : req.session.success , message : req.session.message  });
   };
 
   exports.renderEditPlans = async (req, res) => {
-    const UsersArray = await User.find({});
+    const PlansArray = await Plan.find({});
     
-    res.render('admin/Plan-Crud/EditPlans', { arr: UsersArray , success : req.session.success , message : req.session.message  });
+    res.render('admin/Plan-Crud/EditPlans', { arr: PlansArray , success : req.session.success , message : req.session.message  });
   };
   exports.renderDeletePlans = async (req, res) => {
-    const UsersArray = await User.find({});
+    const PlansArray = await Plan.find({});
     
-    res.render('admin/Plan-Crud/DeletePlans', { arr: UsersArray , success : req.session.success , message : req.session.message  });
+    res.render('admin/Plan-Crud/DeletePlans', { arr: PlansArray , success : req.session.success , message : req.session.message  });
   };
 
 
@@ -205,4 +214,103 @@ console.log(req.body);
         req.session.success = false;
         res.status(500).send('Internal Server Error');
     }
+};
+
+
+
+exports.createPlan = async (req, res) => {
+  const { plan, duration, price } = req.body;
+  console.log(plan,duration,price);
+
+  try {
+      // Validate input fields
+      if (!plan || !duration || !price) {
+          console.error('Invalid input data for adding plan');
+          req.session.message = 'Invalid input data for adding plan';
+          req.session.success = false;
+          return res.status(400).redirect("AddPlans");  // Adjust the redirect URL as needed
+      }
+
+      // Check if the plan already exists
+      const existingPlan = await Plan.findOne({ plan, duration });
+      if (existingPlan) {
+          console.error('Plan with the same name and duration already exists');
+          req.session.message = 'Plan with the same name and duration already exists';
+          req.session.success = false;
+          return res.status(400).redirect("AddPlans");  // Adjust the redirect URL as needed
+      }
+
+      // Create a new plan instance
+      const newPlan = new Plan({ plan, duration, price });
+      await newPlan.save();
+      console.log('Plan created successfully');
+
+      // Set success message
+      req.session.message = "Plan created successfully";
+      req.session.success = true;
+
+      // Redirect after successful creation
+      res.status(302).redirect("plan.ejs");  // Adjust the redirect URL as needed
+
+  } catch (err) {
+      console.error('Error creating plan:', err);
+      req.session.message = 'Internal Server Error';
+      req.session.success = false;
+
+      // Redirect to index.html with error status
+      res.status(500).send('Internal Server Error');
+  }
+};
+
+exports.editPlan = async (req, res) => {
+  const { id, plan, duration, price } = req.body;
+  console.log(req.body);
+console.log("in Edit backend",id, plan, duration, price);
+  try {
+      // Validate input fields
+      if (!id || !plan || !duration || !price) {
+          console.error('Invalid input data for editing plan');
+          req.session.message = 'Invalid input data for editing plan';
+          req.session.success = false;
+          return res.status(400).redirect("EditPlans"); // Adjust this redirection based on your setup
+      }
+
+      // Validate duration format
+      const validDurations = ['1-month', '3-months', '6-months'];
+      if (!validDurations.includes(duration)) {
+          console.error('Invalid duration format');
+          req.session.message = 'Invalid duration format';
+          req.session.success = false;
+          return res.status(400).redirect("EditPlans"); // Adjust this redirection based on your setup
+      }
+
+      // Validate price
+      if (isNaN(price) || price <= 0) {
+          console.error('Invalid price');
+          req.session.message = 'Invalid price';
+          req.session.success = false;
+          return res.status(400).redirect("EditPlans"); // Adjust this redirection based on your setup
+      }
+
+      // Update the plan
+      const updatedPlan = await Plan.findByIdAndUpdate(id, { plan, duration, price }, { new: true });
+
+      if (!updatedPlan) {
+          console.error('Plan not found');
+          req.session.message = 'Plan not found';
+          req.session.success = false;
+          return res.status(404).redirect("EditPlans"); // Adjust this redirection based on your setup
+      }
+
+      // Set success message
+      req.session.message = 'Plan updated successfully';
+      req.session.success = true;
+      res.status(200).redirect("admin/plan.ejs"); // Redirect to the appropriate page
+
+  } catch (err) {
+      console.error('Error updating plan:', err);
+      req.session.message = 'Internal Server Error';
+      req.session.success = false;
+      res.status(500).redirect("admin/plan.ejs"); // Adjust this redirection based on your setup
+  }
 };

@@ -1,252 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nutrition Plan</title>
-    <link rel="stylesheet" href="./WNP.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="creation.js"></script>
-</head>
-<body>
-    <div class="topnav">
-        <a href="WNP.html">Home</a>
-        <a href="workouts.html">Workouts</a>
-        <a href="nutritionplans.html">Nutrition Plans</a>
-        <a href="account.html">Account</a>
-        <a id="sLS" href="login-Signup.html">Log In / Sign Up</a>
-        <a id="c" href="CNPP.html">CNPP</a>
-    </div>
-    <h1 id="HCUNP">Create Your Unique Nutrition Plan</h1>
-    <div class="nform">
-        <div class="title">Personal Information</div>
-        <select id="IN">
-            <option value="">Select Your Target</option>
-            <option value="Weight Loss">Weight Loss</option>
-            <option value="Weight Gain">Weight Gain</option>
-            <option value="Lean Bulking">Lean Bulking</option>
-            <option value="Cutting">Cutting</option>
-        </select>
-        <input id="INH" type="text" placeholder="Your Height">
-        <input id="INW" type="text" placeholder="Your Weight">
-        <input id="INBR" type="text" placeholder="Your Burn Rate">
-        <input id="INA" type="text" placeholder="Your Age">
-        <input id="INFP" type="text" placeholder="Your Percent Body Fat">
-        <input id="INMH" type="text" placeholder="Note for any Medical History">
-        <input id="foodInput" type="text" placeholder="Enter food item">
-        <div class="radio-button-container">
-            <div class="radio-button">
-                <input type="radio" class="radio-button__input" id="radio1" name="radio-group">
-                <label class="radio-button__label" for="radio1">
-                    <span class="radio-button__custom"></span>
-                    MALE
-                </label>
-            </div>
-            <div class="radio-button">
-                <input type="radio" class="radio-button__input" id="radio2" name="radio-group">
-                <label class="radio-button__label" for="radio2">
-                    <span class="radio-button__custom"></span>
-                    FEMALE
-                </label>
-            </div>
-        </div>
-        <div class="BTNCL">
-            <button id="GB">Generate</button>
-            <button id="s">Save</button>
-        </div>
-        <div class="extra"></div>
-        <div class="space"></div>
-    </div>
-</body>
-</html>
-
-//   document.addEventListener("DOMContentLoaded", function() {
-  //     const selectedElement = document.getElementById("target");
-  //     const extraDiv = document.querySelector(".extra");
-  //     const generateButton = document.getElementById("GB");
-
-  //     generateButton.addEventListener("click", function() {
-  //         console.log("Button clicked");
-
-  //         extraDiv.innerHTML = ""; // Clear previous content
-
-  //         const target = selectedElement.value;
-  //         console.log("Selected target:", target);
-
-  //         let proteinPercentage;
-  //         let calorieAdjustment;
-
-  //         switch(target) {
-  //             case "Weight Loss":
-  //                 calorieAdjustment = -500;
-  //                 proteinPercentage = 0.23;
-  //                 break;
-  //             case "Weight Gain":
-  //                 calorieAdjustment = 700;
-  //                 proteinPercentage = 0.27;
-  //                 break;
-  //             case "Lean Bulking":
-  //                 calorieAdjustment = 500;
-  //                 proteinPercentage = 0.35;
-  //                 break;
-  //             case "cutting":
-  //                 calorieAdjustment = -300;
-  //                 proteinPercentage = 0.35;
-  //                 break;
-  //             default:
-  //                 alert("Please select a target.");
-  //                 return;
-  //         }
-
-  //         const burnRate = parseFloat(document.getElementById("burnRate").value);
-  //         if (isNaN(burnRate)) {
-  //             alert("Please enter a valid Burn Rate.");
-  //             return;
-  //         }
-
-  //         const adjustedCalories = burnRate + calorieAdjustment;
-  //         const proteinGrams = (adjustedCalories * proteinPercentage) / 4;
-
-  //         const adjustedMeals = proteinFoods.map(food => {
-  //             const proteinPerGram = food.Protein / 100;
-  //             const gramsRequired = proteinGrams / proteinPerGram;
-  //             return {
-  //                 ...food,
-  //                 Calories: food.Calories * gramsRequired / 100,
-  //                 Protein: food.Protein * gramsRequired / 100,
-  //                 Carbs: food.Carbs * gramsRequired / 100,
-  //                 Fats: food.Fats * gramsRequired / 100,
-  //                 Grams: gramsRequired
-  //             };
-  //         });
-
-  //         console.log("Adjusted meals:", adjustedMeals);
-
-  //     });
-  // });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nutrition Plan</title>
-    <link rel="stylesheet" href="./WNP.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const extraDiv = document.querySelector(".extra");
-            const API_KEY = '8367717409245459eadf4a8e9dcae1df';
-            const APP_ID = '016de66c';
-
-            document.getElementById("GB").addEventListener("click", function() {
-                const apiUrl = `https://developer.nutritionix.com/data?app_id=${APP_ID}&api_key=${API_KEY}`;
-                
-                fetch(apiUrl)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok ' + response.statusText);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log('Data:', data);
-                        extraDiv.innerHTML = JSON.stringify(data, null, 2);
-                    })
-                    .catch(error => {
-                        console.error('Error fetching data:', error);
-                        extraDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
-                    });
-            });
-        });
-    </script>
-</head>
-<body>
-    <div class="topnav">
-        <a href="WNP.html">Home</a>
-        <a href="workouts.html">Workouts</a>
-        <a href="nutritionplans.html">Nutrition Plans</a>
-        <a href="account.html">Account</a>
-        <a id="sLS" href="login-Signup.html">Log In / Sign Up</a>
-    </div>
-    <h1 id="HCUNP">Create Your Unique Nutrition Plan</h1>
-    <div class="nform">
-        <div class="title">Personal Information</div>
-        <select id="IN">
-            <option value="">Select Your Target</option>
-            <option value="Weight Loss">Weight Loss</option>
-            <option value="Weight Gain">Weight Gain</option>
-            <option value="Lean Bulking">Lean Bulking</option>
-            <option value="Cutting">Cutting</option>
-        </select>
-        <input id="IN" type="text" placeholder="Your Height">
-        <input id="IN" type="text" placeholder="Your Weight">
-        <input id="INBR" type="text" placeholder="Your Burn Rate">
-        <input id="IN" type="text" placeholder="Your Age">
-        <input id="IN" type="text" placeholder="Your Percent Body Fat">
-        <div class="radio-button-container">
-            <div class="radio-button">
-                <input type="radio" class="radio-button__input" id="radio1" name="radio-group">
-                <label class="radio-button__label" for="radio1">
-                    <span class="radio-button__custom"></span>
-                    MALE
-                </label>
-            </div>
-            <div class="radio-button">
-                <input type="radio" class="radio-button__input" id="radio2" name="radio-group">
-                <label class="radio-button__label" for="radio2">
-                    <span class="radio-button__custom"></span>
-                    FEMALE
-                </label>
-            </div>
-        </div>
-        <input id="IN" type="text" placeholder="Note for any Medical History">
-        <div class="BTNCL">
-            <button id="GB">Generate</button>
-        </div>
-        <div class="extra"></div>
-        <div class="space"></div>
-    </div>
-</body>
-</html>
-
- -->
-
-
-
-
-
-
-<!-- <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Nutrition Plan</title>
-        <link rel="StyleSheet" href="./WNP.css">
+        <link rel="StyleSheet" href="WNP.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
             <script>
              document.addEventListener("DOMContentLoaded", function() {
@@ -452,7 +210,7 @@
                     <td>Protein</td>
                     <td>${totalProtein.toFixed(2)}</td>
                 </tr>
-                 Add more rows for other macros as needed 
+                <!-- Add more rows for other macros as needed -->
             </tbody>
         `;
         console.log("Table:", table);
@@ -461,15 +219,28 @@
 });
 
             </script>
-            <div class="topnav">
-                <a href="WNP.html">Home</a>
-                <a href="workouts.html">workouts</a>
-                <a href="nutritionplans.html">Nutrition Plans</a>
-                <a href="account.html">Account</a>
-                <a id="sLS" href="login-Signup.html">Log In / Sign Up</a>
-                 <a href="signup.html">Sign Up</a> 
-            </div>
+            
     </head>
+    <header>
+      <nav>
+          <div class="navbar">
+              <div class="navheader">
+                  <div class="navlogo">
+                      <a href="#"> NUTRIFIT </a>
+                  </div>
+                  <div class="navmenubtn" id="menu-btn">
+                      <i class="ri-menu-line"> </i>
+                  </div>
+              </div>
+              <ul class="navlinks" id="nav-links">
+                  <li> <a href="homepage.html"> HOME </a> </li>
+                
+                  <li> <a href="account.html"> ACCOUNT </a> </li>
+                  <li> <a href="index.html"> LOG IN / SIGN IN </a> </li>
+                </ul>
+          </div>
+      </nav>
+  </header>
     <body>
         <h id="HCUNP">Create Your Uniqe Nutrition Plan</h>
         <div class="nform">
@@ -479,7 +250,7 @@
                 <option value="Weight Loss">Weight Loss</option>
                 <option value="Weight Gain">Weight Gain</option>
                 <option value="Lean Bulking">Lean Bulking</option>
-                 <option value="Dirty Bulking">Dirty Bulking</option>
+                <!-- <option value="Dirty Bulking">Dirty Bulking</option> -->
                 <option value="cutting">cutting</option>
             </select>
             <input id="IN" type="text" placeholder="Your Height">
@@ -515,7 +286,7 @@
     </body>
 
 </html>
-        <div class="container">
+        <!-- <div class="container">
             <form class="NForm">
                 <div class="NLoginl">Personal Information</div>
                 <select>
@@ -789,4 +560,4 @@
             </div>
             
         </div>-->
-         
+        

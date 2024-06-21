@@ -115,96 +115,9 @@ document.getElementById('ProductTABLE').appendChild(tr);
     });
 }
 
-function addPlan() {
-    let newProductName = document.getElementById('newProductName').value;
-    let newDuration = document.getElementById('newProductDuration').value;
-
-    document.getElementById('AddProducterrorError').classList.add('hidden');
-    document.getElementById('AddProductDurationError').classList.add('hidden');
-    
-    // Validate input fields
-    if (newProductName === "" || newDuration === "") {
-        document.getElementById('AddProductDurationError').textContent = 'Please fill all values';
-        document.getElementById('AddProductDurationError').classList.remove('hidden');
-        return;
-    }
-
-    // Check if the plan is valid
-    document.getElementById('AddProductDurationError').textContent = 'please enter valid duration.   1-month,2-months,3-months or 6-months';
-
-    // Check if the duration is valid
-    if (!isValidDurationonly(newDuration)) {
-        document.getElementById('AddProductDurationError').classList.remove('hidden');
-        return;
-    }
-    
-    // Create a new Plan object
-    let newPlan = new Plan(nextPlanId++, newProductName, newDuration);
-
-    // Push the new plan to the Plans array (assuming it's defined globally)
-    Products.push(newPlan);
-
-    console.log('Adding new plan:', newPlan);
-    
-
-    // Close the popup after adding the plan
-    closePopup('addPopupProduct');
-
-    // Render the updated table of plans
-    renderTableClassProducts(); // You need to implement this function to render the plan table
-}
-
-function editPlan() {
-    let planId = parseInt(document.getElementById('ProductIdedit').value);
-    let newProductName = document.getElementById('ProductNameedit').value;
-    let newDuration = document.getElementById('newProductDurationedit').value;
-   
-
-   
 
 
-    
 
-    document.getElementById('EditErrorDuration').classList.add('hidden');
-    document.getElementById('EditErrorProductname').classList.add('hidden');
-    
-    // Validate input fields
-    if (newProductName === "" || newDuration === "") {
-        document.getElementById('EditErrorDuration').textContent = 'Please fill both values';
-        document.getElementById('EditErrorDuration').classList.remove('hidden');
-        return;
-    }
-
-    // Check if the plan is valid
-    document.getElementById('EditErrorDuration').textContent = 'Please enter 1-month, 2-month or 3 month';
-
-    // Check if the duration is valid
-    if (!isValidDurationonly(newDuration)) {
-        document.getElementById('EditErrorDuration').classList.remove('hidden');
-        return;
-    }
-
-    // Find the plan to edit by its ID
-    console.log(Products)
-    const planToEdit = Products.find(plan => plan.ProductID === planId);
-
-    if (!planToEdit) {
-        alert('Plan not found');
-        return;
-    }
-
-    // Update the plan with new values
-    planToEdit.Productname = newProductName;
-    planToEdit.Duration = newDuration;
-
-    console.log('Editing plan:', planToEdit);
-
-    // Close the popup after editing the plan
-    closePopup('editPopupProduct');
-
-    // Render the updated table of plans
-    renderTableClassProducts(); // You need to implement this function to render the plan table
-}
 
 function deletePlan() {
     // Get the plan ID to delete
@@ -523,6 +436,8 @@ function isValidDuration(plan, duration) {
 
 
 function login() {
+
+    window.open('index.html', '_self');
     event.preventDefault(); 
     let username = document.getElementById('loginUsername').value;
     let password = document.getElementById('loginPassword').value;
@@ -803,15 +718,20 @@ function deleteData(event) {
 
 
 
-function addPlan() {
-    let newProductName = parseInt(document.getElementById('newProductName').value);
+function addPlan(event) {
+
+    event.preventDefault();
+
+    let newProductName = document.getElementById('newProductName').value;
     let newDuration = document.getElementById('newProductDuration').value;
-let userIdAddTo = document.getElementById('newUserID').value;
+    let newPrice =   document.getElementById('newProductPrice').value;
+console.log('Adding plan with details:', { newProductName, newDuration, newPrice });
     document.getElementById('AddProducterrorError').classList.add('hidden');
     document.getElementById('AddProductDurationError').classList.add('hidden');
-    
+    document.getElementById('AddProductPriceError').classList.add('hidden');
+
     // Validate input fields
-    if (newProductName === "" || newDuration === "") {
+    if (newProductName === "" || newDuration === "" || newPrice =="") {
         document.getElementById('AddProductDurationError').textContent = 'Please fill all values';
         document.getElementById('AddProductDurationError').classList.remove('hidden');
         return;
@@ -825,50 +745,91 @@ let userIdAddTo = document.getElementById('newUserID').value;
         document.getElementById('AddProductDurationError').classList.remove('hidden');
         return;
     }
-    const userToAddto = users.find(user => user.id === userIdAddTo);
-    console.log(userIdAddTo)
-    if(!userToAddto ){
-console.log('dffd')
-console.log(users)
-        document.getElementById('AddUSerIdError').classList.remove('hidden');
-        return;
-    }
-    document.getElementById('AddUSerIdError').classList.add('hidden');
-    // Create a new Plan object
-    let newPlan = new Plan(nextPlanId++, newProductName, newDuration,1);
-
-    // Push the new plan to the Plans array (assuming it's defined globally)
-    Products.push(newPlan);
-
-    console.log('Adding new plan:', newPlan);
+  
+  console.log('Adding plan with details:', { newProductName, newDuration, newPrice });
     
 
-    // Close the popup after adding the plan
-    closePopup('addPopupProduct');
-
-    // Render the updated table of plans
-    renderTableClassProducts(); // You need to implement this function to render the plan table
-}
-
-
-function renderTableClassUsers() {
-    
-    document.getElementById('USERTABLE').innerHTML = '';
-
-   
-    users.forEach(user => {
-        const tr = document.createElement('tr');
-        const trcontent = `
-            <td>${user.id}</td>
-            <td>${user.username}</td>
-            <td>${user.password}</td>
-            <td>${user.email}</td>
-            <td>${user.role}</td>
-        `;
-        tr.innerHTML = trcontent;
-        document.getElementById('USERTABLE').appendChild(tr);
+  fetch('addPlans', {
+         method: 'POST',
+         headers: {
+         'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({ plan: newProductName, duration: newDuration, price: newPrice }),
+     }).then(response => {
+         if (!response.ok) {
+            throw new Error('Network response was not ok');
+         }  
+           
+         console.log('Plan added successfully');
+        // Optionally handle success message display or UI updates
+        // Redirect after successful deletion
+        window.location.href = "plan.ejs";
+     })
+    .catch(error => {
+        console.error('Error deleting plan:', error);
+        
     });
 }
+
+function editPlan(event) {
+    event.preventDefault();
+    let planId = parseInt(document.getElementById('ProductIdedit').value);
+    let updatedProductName = document.getElementById('ProductNameedit').value;
+    let updatedDuration = document.getElementById('newProductDurationedit').value;
+    let updatedPrice = document.getElementById('updatedProductPrice').value;
+
+    console.log('Editing plan with details:', { planId, updatedProductName, updatedDuration, updatedPrice });
+
+    document.getElementById('EditErrorProductId').classList.add('hidden');
+    document.getElementById('EditErrorDuration').classList.add('hidden');
+    document.getElementById('EditErrorProductname').classList.add('hidden');
+    
+    // Validate input fields
+    if (planId === "" || updatedProductName === "" || updatedDuration === "" || updatedPrice === "") {
+        document.getElementById('EditErrorDuration').textContent = 'Please fill all values';
+        document.getElementById('EditErrorDuration').classList.remove('hidden');
+        return;
+    }
+
+    // Check if the plan is valid
+    document.getElementById('EditErrorDuration').textContent = 'Please enter 1-month, 2-month or 3 month';
+
+    // Check if the duration is valid
+    if (!isValidDurationonly(updatedDuration)) {
+        document.getElementById('EditErrorDuration').classList.remove('hidden');
+        return;
+    }
+    if (isNaN(updatedPrice) || updatedPrice <= 0) {
+        document.getElementById('EditErrorProductId').textContent = 'Please enter a valid price';
+        document.getElementById('EditErrorProductId').classList.remove('hidden');
+        return;
+    }
+   
+
+    fetch(`/admin/EditPlans?_method=PUT`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: planId, plan: updatedProductName, duration: updatedDuration, price: updatedPrice }),
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        console.log('Plan edited successfully');
+        // Optionally handle success message display or UI updates
+        // Redirect after successful editing
+        window.location.href = "/admin/plan.ejs";
+    }).catch(error => {
+        console.error('Error editing plan:', error);
+        document.getElementById('EditErrorProductId').textContent = 'Error editing plan';
+        document.getElementById('EditErrorProductId').classList.remove('hidden');
+    });
+
+}
+
+
 
 function addRecentViewer(user) {
     // Create a new div element for the recent viewer

@@ -16,26 +16,26 @@
     <div class="Tablelist">
         <h2>Products</h2>
         <div class="table-container">
-        <table>
-            <thead>
-                <tr><th>ProductID</th>
-                    <th>Product name</th>
-                    <th>Duration</th>
-                    
-                    <th>Price</th>
-                    
-                    <th></th>
-                </tr>
-            </thead>
+            <table>
+                <thead>
+                    <tr><th>ProductID</th>
+                        <th>Product name</th>
+                        <th>Duration</th>
+                        
+                        <th>Price</th>
+                        
+                        <th></th>
+                    </tr>
+                </thead>
             <tbody id="ProductTABLE" >
                 
                 <% arr.forEach((item,index) => { %>
                     <tr>
                         <td><%= index +1 %> </td>
-                    <td><%= item.username %> </td>
-                    <td><%= item.password %> </td>
-                    <td><%= item.email %></td>  
-                    <td><%= item.role %></td>       
+                    <td><%= item.plan %> </td>
+                    <td><%= item.duration %> </td>
+                    <td><%= item.price %></td>  
+                           
                         <% }) %> 
                     </tr> 
 
@@ -43,23 +43,27 @@
             
         </table>
     </div>
-
+ 
+            
+            
+       
 <div id="addPopupProduct" class="popup-container">
     <div class="popup-content">
         <span class="close" onclick="window.location.href = 'plan.ejs'">&times;</span>
         <h2>Add Data</h2>
         
-
+        <form action="/admin/AddPlans" method="post">
         <input type="text" id="newProductName"
         class="inputdata" placeholder="new Product Name"><span id="AddProducterrorError" class="error-message hidden">this productname is unavailable</span><br><br>
 
         <input type="text" id="newProductDuration"
         class="inputdata" placeholder="Duration"><span id="AddProductDurationError" class="error-message hidden">unavailable Duration</span><br><br>
 
-        <input type="text" id="newUserID"
-        class="inputdata" placeholder="user-id"><span id="AddUSerIdError" class="error-message hidden">please enter valid user id</span><br><br>
+        <input type="text" id="newProductPrice"
+        class="inputdata" placeholder="Price"><span id="AddProductPriceError" class="error-message hidden">please enter valid user id</span><br><br>
         
-        <button onclick="addPlan()" class="editors">Add</button>
+        <button onclick="addPlan(event)" class="editors">Add</button>
+        </form>
     </div>
     </div>
 

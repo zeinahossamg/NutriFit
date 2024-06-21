@@ -16,26 +16,26 @@
     <div class="Tablelist">
         <h2>Products</h2>
         <div class="table-container">
-        <table>
-            <thead>
-                <tr><th>ProductID</th>
-                    <th>Product name</th>
-                    <th>Duration</th>
-                    
-                    <th>Price</th>
-                    
-                    <th></th>
-                </tr>
-            </thead>
+            <table>
+                <thead>
+                    <tr><th>ProductID</th>
+                        <th>Product name</th>
+                        <th>Duration</th>
+                        
+                        <th>Price</th>
+                        
+                        <th></th>
+                    </tr>
+                </thead>
             <tbody id="ProductTABLE" >
                 
                 <% arr.forEach((item,index) => { %>
                     <tr>
                         <td><%= index +1 %> </td>
-                    <td><%= item.username %> </td>
-                    <td><%= item.password %> </td>
-                    <td><%= item.email %></td>  
-                    <td><%= item.role %></td>       
+                    <td><%= item.plan %> </td>
+                    <td><%= item.duration %> </td>
+                    <td><%= item.price %></td>  
+                           
                         <% }) %> 
                     </tr> 
 
