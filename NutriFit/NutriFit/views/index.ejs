@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>NutriFit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://kit.fontawesome.com/6866201b21.js" crossorigin="anonymous"></script>
+   
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body >
+
+   
+
+    <div class="container ">
+        
+<%- include('./components/navbar.ejs',{currentpage:"index"}) %>
+
+        <main id="content " >
+           <div   id="Dashboard" class="page">
+            <h1>Dashboard</h1>
+            <div class="insights">
+                <div class="sales">
+                    <span><i class="fa-solid fa-chart-simple fa-xl"></i></span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Total Sales</h3>
+                            <h1><%= totalprices %></h1>
+                        </div>
+                        <div class="progress"> <svg>
+                                <circle cx='38' cy='38' r="36"></circle>
+                            </svg>
+                            <div class="number">
+                                <p>81%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Last 24 hours</small>
+                </div>
+                <div class="Users">
+                    <span><i class="fa-solid fa-users fa-xl"></i></span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Total Users</h3>
+                            <h1><%= users %></h1>
+                        </div>
+                        <div class="progress"> <svg>
+                                <circle cx='38' cy='38' r="36"></circle>
+                            </svg>
+                            <div class="number">
+                                <p>81%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Last 24 hours</small>
+                </div>
+
+
+            </div>
+
+            <div id="editOrders">
+            <div class="Tablelist">
+                <h2>Recent Orders</h2>
+                <% if (arr.length === 0) { %>
+                 <h1 style="text-align: center ; margin-bottom: 4rem ;"> No Data Available</h1>
+                <% } else {  %>
+                    <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product Number</th>
+                                <th>Plan</th>
+                                <th>Duration</th>
+                                <th>Payment</th>
+                                
+                                
+                            </tr>
+                        </thead>
+    
+                        <tbody id="RecentOrdertable" >
+                            
+                            <% arr.forEach((item,index) => { %>
+                            <tr>
+                                <td><%= index +1 %> </td>
+                            <td><%= item.plan %> </td>
+                            <td><%= item.duration %> </td>
+                            <td><%= item.price %></td>        
+                                <% }) %> 
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                    <% }%>
+                
+                   
+
+                <button id="addButtonOrder" class="editors" onclick="window.location.href ='Orders-Crud/AddOrders'">Add</button>
+                <button id="editButtonOrder" class="editors" onclick="window.location.href ='Orders-Crud/EditOrders'">Edit</button>
+                <button id="deleteButtonOrder" class="editors" onclick="window.location.href ='Orders-Crud/DeleteOrders'">Delete</button>
+                        </div>
+
+                        <% if (message) { %>
+                            <h1 class="<%= success ? 'success-messagee' : 'error-messagee' %>"><%= message %></h1>
+                        <% } %>
+            </div>
+
+
+        </div>
+
+
+
+
+        
+
+
+
+
+
+       
+
+
+      
+        </main>
+
+
+
+
+
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <i class="fa-solid fa-bars fa-2xl"></i>
+                </button>
+                
+                <div class="profile">
+                    <div class=" info">
+                        <p>hey, <b>ismail</b></p>
+                        <small class="text-muted">Admin</small>
+                    </div>
+                    <div >
+                        <i class="fa-regular fa-user fa-2xl"></i>
+                    </div>
+                </div>
+
+            </div>
+
+
+        
+
+
+        </div>
+    </div>
+</body>
+<script src="js/javascript.js"></script>
+
+</html>
