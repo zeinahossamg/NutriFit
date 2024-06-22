@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View All Exercises</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="viewAllExercises.css">
+</head>
+
+<body>
+
+    <div class="motivation">
+        <div class="motivation-item">
+            <h1>Get stronger <br> & fitter with <br> nutrifit </h1>
+            <p>
+                <span>Add your <br> exercises now</span>
+                <span>
+                    <img width="40" height="40" src="https://img.icons8.com/material-outlined/48/ffffff/exercise.png"
+                        alt="exercise" />
+                </span>
+            </p>
+        </div>
+        <div class="motivation-item">
+            <div class="gym-girl-container">
+                <img src="https://qwestore.com/png_images_min/7/bAthletic-girlb-Image-Woman-body-slim-119.png" />
+            </div>
+        </div>
+    </div>
+
+    <div class="the-exercises">
+        <div class="exercises-container">
+
+        </div>
+    </div>
+
+    <script>
+        async function fetchExercises() {
+            try {
+                const response = await fetch('http://localhost:3000/exercise/allExercises');
+                const exercises = await response.json();
+
+                const exercisesContainer = document.querySelector('.exercises-container');
+                exercises.forEach(exercise => {
+                    const exerciseDiv = createExerciseElement(exercise);
+                    exercisesContainer.appendChild(exerciseDiv);
+                });
+
+            } catch (error) {
+                console.error('Error fetching exercises:', error);
+            }
+        }
+
+        function createExerciseElement(exercise) {
+            const exerciseDiv = document.createElement('div');
+            exerciseDiv.classList.add('exercise');
+            exerciseDiv.innerHTML = `
+                <h2>${exercise.title}</h2>
+                <p><strong>Muscle Group:</strong> <span class="muscleGroup">${exercise.muscleGroup}</span></p>
+                <p><strong>Difficulty Level:</strong> <span class="difficultyLevel">${exercise.difficultyLevel}</span></p>
+                <p><strong>Description:</strong> <span class="description">${exercise.description}</span></p>
+                <p><strong>Equipment Needed:</strong> <span class="equipmentNeeded">${exercise.equipmentNeeded}</span></p>
+                <button class="edit-btn exercise-btn">Update Exercise</button>
+                <button class="delete-btn exercise-btn" data-exercise-id="${exercise._id}">Delete Exercise</button>
+                <button class="done-btn exercise-btn" style="display: none;">Done</button>
+                <button class="cancel-btn exercise-btn" style="display: none;">Cancel</button>
+            `;
+
+            // Add event listener to edit button
+            const editBtn = exerciseDiv.querySelector('.edit-btn');
+            editBtn.addEventListener('click', function () {
+                toggleEditState(exerciseDiv);
+            });
+
+            // Add event listener to delete button
+            const deleteBtn = exerciseDiv.querySelector('.delete-btn');
+            deleteBtn.addEventListener('click', async function (event) {
+                const exerciseId = event.target.dataset.exerciseId;
+                try {
+                    const response = await fetch(`http://localhost:3000/exercise/deleteExercise/${exerciseId}`, {
+                        method: 'DELETE'
+                    });
+                    if (response.ok) {
+                        exerciseDiv.remove(); // Remove exercise div from UI
+                        console.log('Exercise deleted successfully');
+                    } else {
+                        console.error('Failed to delete exercise');
+                    }
+                } catch (error) {
+                    console.error('Error deleting exercise:', error);
+                }
+            });
+
+            // Add event listener to done button
+            const doneBtn = exerciseDiv.querySelector('.done-btn');
+            doneBtn.addEventListener('click', async function () {
+
+                const updatedExercise = {
+                    _id: exercise._id,
+                    title: exerciseDiv.querySelector('h2').textContent,
+                    muscleGroup: exerciseDiv.querySelector('.muscleGroup').value,
+                    difficultyLevel: exerciseDiv.querySelector('.difficultyLevel').value,
+                    description: exerciseDiv.querySelector('.description').value,
+                    equipmentNeeded: exerciseDiv.querySelector('.equipmentNeeded').value
+
+                };
+                try {
+                    const response = await fetch(`http://localhost:3000/exercise/updateExercise/${updatedExercise._id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(updatedExercise)
+                    });
+                    if (response.ok) {
+                        toggleEditStateBack(exerciseDiv);
+                        console.log('Exercise updated successfully');
+                    } else {
+                        console.error('Failed to update exercise');
+                    }
+                } catch (error) {
+                    console.error(`Error updating exercise: ${error.message}`, error);
+                }
+            });
+
+            // Add event listener to cancel button
+            const cancelBtn = exerciseDiv.querySelector('.cancel-btn');
+            cancelBtn.addEventListener('click', function () {
+                toggleEditStateBack(exerciseDiv);
+            });
+
+            return exerciseDiv;
+        }
+
+        function toggleEditState(exerciseDiv) {
+            const editableElements = exerciseDiv.querySelectorAll('span');
+            editableElements.forEach(span => {
+                const textContent = span.textContent;
+                const input = document.createElement('input');
+                input.value = textContent;
+                input.className = span.className;
+                span.replaceWith(input);
+            });
+
+            const editBtn = exerciseDiv.querySelector('.edit-btn');
+            const deleteBtn = exerciseDiv.querySelector('.delete-btn');
+            const doneBtn = exerciseDiv.querySelector('.done-btn');
+            const cancelBtn = exerciseDiv.querySelector('.cancel-btn');
+
+            editBtn.style.display = 'none';
+            deleteBtn.style.display = 'none';
+            doneBtn.style.display = 'inline-block';
+            cancelBtn.style.display = 'inline-block';
+        }
+
+        function toggleEditStateBack(exerciseDiv) {
+            const editableElements = exerciseDiv.querySelectorAll('input');
+            editableElements.forEach(input => {
+                const textContent = input.value;
+                const span = document.createElement('span');
+                span.textContent = textContent;
+                span.className = input.className;
+                input.replaceWith(span);
+            });
+
+            const editBtn = exerciseDiv.querySelector('.edit-btn');
+            const deleteBtn = exerciseDiv.querySelector('.delete-btn');
+            const doneBtn = exerciseDiv.querySelector('.done-btn');
+            const cancelBtn = exerciseDiv.querySelector('.cancel-btn');
+
+            editBtn.style.display = 'inline-block';
+            deleteBtn.style.display = 'inline-block';
+            doneBtn.style.display = 'none';
+            cancelBtn.style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchExercises);
+    </script>
+</body>
+
+</html>

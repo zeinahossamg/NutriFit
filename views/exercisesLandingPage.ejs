@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="exerciseLandingPage.css">
+    <title>Exercise Landing Page</title>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">Your Logo</a>
+            <ul class="nav-links">
+                <li><a href="#beginners">For Beginners</a></li>
+                <li><a href="#professionals">For Professionals</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div id="beginners" class="section beginners">
+            <div class="content">
+                <h2>My Exercises</h2>
+                <p>View all the exercises you've added to your routine till now!</p>
+                <button onclick="navigateToAllExercises()">Browse Exercises</button>
+            </div>
+        </div>
+
+        <div id="professionals" class="section professionals">
+            <div class="content">
+                <h2>Add Exercises</h2>
+                <p>List your favorite exercises that you'd like to add</p>
+                <button onclick="navigateToAddExercise()">Add Exercise</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function navigateToAllExercises() {
+            window.location.href = '/viewAllExercises';
+        }
+
+        function navigateToAddExercise() {
+            window.location.href = '/addExercise';
+        }
+
+    </script>
+</body>
+
+</html>

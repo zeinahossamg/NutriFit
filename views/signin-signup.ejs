@@ -2,69 +2,136 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>NutriFit</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <script src="https://kit.fontawesome.com/6866201b21.js" crossorigin="anonymous"></script>
-   
-    <link rel="stylesheet" href="css/style.css" />
+  <title>NutriFit</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <script src="https://kit.fontawesome.com/6866201b21.js" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="login.css" />
 </head>
 
-<body >
+<body>
 
-    <div class="Log-SignContainer   " id="Log-SignContainer">
-        <div class="form-container sign-up">
-            <form>
-                <h1>Create Account</h1>
-                <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-                <span>or use your email for registeration</span>
-                <input type="text" placeholder="Name" id="signupUsername">
-                <span id="signupErrorUsername" class="error-message hidden"></span>
-                <input type="email" placeholder="Email" id="signupEmail">
-                <span id="signupErrorEmail" class="error-message hidden"></span>
-                <input type="password" placeholder="Password" id="signupPassword">
-                <span id="signupErrorPassword" class="error-message hidden"></span>
-                <button onclick="signup()">Sign Up</button>
-            </form>
+  <div class="Log-SignContainer" id="Log-SignContainer">
+
+    <div class="form-container sign-up">
+      <form id="signupForm">
+        <h1>Create Account</h1>
+        <div class="social-icons">
+          <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
         </div>
-        <div class="form-container sign-in">
-            <form>
-                <h1>Sign In</h1>
-                <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-                <span>or use your email password</span>
-                <input type="name" placeholder="name" id="loginUsername">
-                <input type="password" placeholder="Password" id="loginPassword">
-                <span id="loginError" class="error-message hidden">"Invalid username or password"</span>
-                <a href="#">Forget Your Password?</a>
-                <button onclick="login()">Sign In</button>
-            </form>
-        </div>
-        <div class="toggle-container">
-            <div class="toggle">
-                <div class="toggle-panel toggle-left">
-                    <h1>Welcome Back!</h1>
-                    <p style="color: aliceblue;">Enter your personal details to use all of site features</p>
-                    <button  id="login">Sign In</button>
-                </div>
-                <div class="toggle-panel toggle-right">
-                    <h1>Hello, Friend!</h1>
-                    <p style="color: aliceblue;">Register with your personal details to use all of site features</p>
-                    <button  id="register">Sign Up</button>
-                </div>
-            </div>
-        </div>
+        <span>or use your email for registration</span>
+        <input type="text" placeholder="Username" name="username" id="signupUsername">
+        <span id="signupErrorUsername" class="error-message hidden"></span>
+        <input type="email" placeholder="Email" name="email" id="signupEmail">
+        <span id="signupErrorEmail" class="error-message hidden"></span>
+        <input type="password" placeholder="Password" name="password" id="signupPassword">
+        <span id="signupErrorPassword" class="error-message hidden"></span>
+        <button type="submit">Sign Up</button>
+      </form>
     </div>
-    </body>
-    <script src="js/javascript.js"></script>
+
+    <div class="form-container sign-in">
+      <form id="signinForm">
+        <h1>Sign In</h1>
+        <div class="social-icons">
+          <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+        <span>or use your email for login</span>
+        <input type="text" placeholder="Username" name="username" id="loginUsername">
+        <input type="password" placeholder="Password" name="password" id="loginPassword">
+        <span id="loginError" class="error-message hidden">Invalid username or password</span>
+        <a href="#">Forget Your Password?</a>
+        <button type="submit">Sign In</button>
+      </form>
+    </div>
+
+    <div class="toggle-container">
+      <div class="toggle">
+        <div class="toggle-panel toggle-left">
+          <h1>Welcome Back!</h1>
+          <p style="color: aliceblue;">Enter your personal details to use all of site features</p>
+          <button id="login">Sign In</button>
+        </div>
+        <div class="toggle-panel toggle-right">
+          <h1>Hello, Friend!</h1>
+          <p style="color: aliceblue;">Register with your personal details to use all of site features</p>
+          <button id="register">Sign Up</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+<script>
+  document.getElementById("signupForm").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch("/user/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        credentials: "include", // Include cookies in the request
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        alert("Signup successful!");
+        // Redirect or update UI as needed
+      } else {
+        const errorData = await response.json();
+        alert(`Signup failed: ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Signup failed, please try again later");
+    }
+  });
+
+  document.getElementById("signinForm").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch("/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        credentials: "include", // Include cookies in the request
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData);
+
+      } else {
+        const errorData = await response.json();
+        console.log(errorData);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Login failed, please try again later");
+    }
+  });
+
+
+</script>
+<script src="./js/javascript.js"></script>
+
+</html>
