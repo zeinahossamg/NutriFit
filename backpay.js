@@ -2,14 +2,19 @@ const express = require('express')
 const app = express()
 const port = 3000
 const mongoose = require('mongoose');
+const path=require('path');
 app.use(express.urlencoded({ extended: true }));
-const Mydata= require("./mydataSchema")
+app.use(express.static('public'));
+const Mydata= require("./public/mydataSchema")
 
 
-app.get("/", (req, res) => {
+/*app.get("/", (req, res) => {
     res.sendFile("./payment & Billing.html", { root: __dirname })
 })
-
+*/
+app.get('/', (req,res) => {
+    res.sendFile(path.join(__dirname, './payment & Billing.html'))
+});
 
 
 mongoose
