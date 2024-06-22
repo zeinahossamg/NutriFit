@@ -26,6 +26,6 @@ router.get('/DeletePlans', adminController.renderDeletePlans);
 
 router.post('/AddPlans', adminController.createPlan);
 router.put('/EditPlans', adminController.editPlan);
-router.delete('/DeletePlans', adminController.deleteUser);
+router.delete('/DeletePlans', adminController.deletePlan);
 
 module.exports = router;

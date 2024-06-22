@@ -155,7 +155,7 @@ exports.renderUser = async (req, res) => {
   
           req.session.message = 'User deleted successfully';
           req.session.success = true;
-          res.status(302).redirect('admin/user.ejs');
+          res.status(302).redirect('user.ejs');
 
         }
 
@@ -202,7 +202,7 @@ console.log(req.body);
   
           req.session.message = "User edited successfully";
           req.session.success = true;
-          res.status(302).redirect("admin/user.ejs");
+          res.status(302).redirect("user.ejs");
         }
 
         
@@ -263,7 +263,13 @@ exports.createPlan = async (req, res) => {
 };
 
 exports.editPlan = async (req, res) => {
-  const { id, plan, duration, price } = req.body;
+
+  const id = parseInt(req.body.id, 10) - 1;
+
+  const {  plan, duration, price } = req.body;
+
+  const PlansArray = await Plan.find({});
+
   console.log(req.body);
 console.log("in Edit backend",id, plan, duration, price);
   try {
@@ -293,24 +299,64 @@ console.log("in Edit backend",id, plan, duration, price);
       }
 
       // Update the plan
-      const updatedPlan = await Plan.findByIdAndUpdate(id, { plan, duration, price }, { new: true });
+      
+      //const updatedPlan = await Plan.findByIdAndUpdate(id, { plan, duration, price }, { new: true });
+      const PlanId = PlansArray[id]._id;
+      await Plan.updateOne({ _id: PlanId }, { plan, duration, price });
 
-      if (!updatedPlan) {
-          console.error('Plan not found');
-          req.session.message = 'Plan not found';
-          req.session.success = false;
-          return res.status(404).redirect("EditPlans"); // Adjust this redirection based on your setup
-      }
+      
 
       // Set success message
       req.session.message = 'Plan updated successfully';
       req.session.success = true;
-      res.status(200).redirect("admin/plan.ejs"); // Redirect to the appropriate page
+      res.status(200).redirect("plan.ejs"); // Redirect to the appropriate page
 
   } catch (err) {
       console.error('Error updating plan:', err);
       req.session.message = 'Internal Server Error';
       req.session.success = false;
-      res.status(500).redirect("admin/plan.ejs"); // Adjust this redirection based on your setup
+      res.status(500).redirect("plan.ejs"); // Adjust this redirection based on your setup
+  }
+};
+
+
+exports.deletePlan = async (req, res) => {
+  const ID = parseInt(req.body.id, 10) - 1;
+  console.log(req.body);
+  console.log("in Delete backend", ID);
+
+  try {
+    const PlansArray = await Plan.find({});
+    console.log("length", PlansArray.length);
+    console.log("the id is back ",ID);
+      // Validate input fields
+      if (ID === "" || isNaN(ID) || ID < 0 || ID >= PlansArray.length) {
+          console.error('Invalid input data for deleting plan');
+          req.session.message = 'Invalid input data for deleting plan';
+          req.session.success = false;
+          return res.status(400).redirect("DeletePlans"); // Adjust this redirection based on your setup
+      } else{
+
+// Delete the plan
+
+const PlanID = PlansArray[ID]._id;
+
+await Plan.deleteOne({ _id: PlanID });
+
+
+// Set success message
+req.session.message = 'Plan deleted successfully';
+req.session.success = true;
+res.status(200).redirect("plan.ejs"); // Redirect to the appropriate page
+
+
+      }
+
+      
+  } catch (err) {
+      console.error('Error deleting plan:', err);
+      req.session.message = 'Internal Server Error';
+      req.session.success = false;
+      return res.status(500).send('Internal Server Error');// Adjust this redirection based on your setup
   }
 };

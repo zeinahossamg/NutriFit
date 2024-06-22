@@ -134,6 +134,22 @@ b{
     color: var(--color-warning);
 }
 
+.success-messagee {
+   
+    margin-top: 15px;
+    padding: 10px;
+    color: black;
+   border-radius: 5px;
+   background-color: green;
+}
+
+.error-messagee {
+    margin-top: 15px;
+    padding: 10px;
+    color: black;
+   border-radius: 5px;
+    background-color: rgba(215, 47, 47, 0.685);
+}
 
 aside{
 height: 100vh;

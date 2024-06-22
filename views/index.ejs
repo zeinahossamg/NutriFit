@@ -29,7 +29,7 @@
                     <div class="middle">
                         <div class="left">
                             <h3>Total Sales</h3>
-                            <h1>$25,024</h1>
+                            <h1><%= totalprices %></h1>
                         </div>
                         <div class="progress"> <svg>
                                 <circle cx='38' cy='38' r="36"></circle>
@@ -46,7 +46,7 @@
                     <div class="middle">
                         <div class="left">
                             <h3>Total Users</h3>
-                            <h1>5000</h1>
+                            <h1><%= users %></h1>
                         </div>
                         <div class="progress"> <svg>
                                 <circle cx='38' cy='38' r="36"></circle>
@@ -103,10 +103,8 @@
                 <button id="deleteButtonOrder" class="editors" onclick="window.location.href ='Orders-Crud/DeleteOrders'">Delete</button>
                         </div>
 
-                        <% if (success) { %>
-                            <h1 ><%= message %></h1>
-                        <% } else { %>
-                            <h1><%= message %></h1>
+                        <% if (message) { %>
+                            <h1 class="<%= success ? 'success-messagee' : 'error-messagee' %>"><%= message %></h1>
                         <% } %>
             </div>
 
@@ -149,49 +147,7 @@
                 </div>
 
             </div>
-<div class="recent-viewer">
-<h2> Recent visitors</h2>
-<div class="visitors">
-    <div class="visitor">
-        <div >
-            <i class="fa-regular fa-user fa-lg"></i>        </div>
-        <div class="visited">
-            <p>ismail has visited the website</p>
-            <small class="text-muted"> 2 minutes ago</small>
-        </div>
-    </div>
 
-
-    <div class="visitor">
-        <div >
-            <i class="fa-regular fa-user fa-lg"></i>        <div class="visited">
-            <p>youssef has visited the website</p>
-            <small class="text-muted"> 2 minutes ago</small>
-        </div>
-    </div>
-
-
-    <div class="visitor">
-        <div >
-            <i class="fa-regular fa-user fa-lg"></i>        </div>
-        <div class="visited">
-            <p>mohanad has visited the website</p>
-            <small class="text-muted"> 2 minutes ago</small>
-        </div>
-    </div>
-
-    <div class="visitor">
-        <div >
-            <i class="fa-regular fa-user fa-lg"></i>        </div>
-        <div class="visited">
-            <p>zeina has visited the website</p>
-            <small class="text-muted"> 2 minutes ago</small>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-        </div>
 
         
 

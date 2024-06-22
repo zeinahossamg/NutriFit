@@ -55,6 +55,9 @@
 <button id="deleteButton" class="editors" onclick="window.location.href ='DeletePlans'">Delete</button>
 </div>
 
+<% if (message) { %>
+    <h1 class="<%= success ? 'success-messagee' : 'error-messagee' %>"><%= message %></h1>
+<% } %>
     
     
 </div>

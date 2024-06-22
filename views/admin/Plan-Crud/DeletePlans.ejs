@@ -48,10 +48,12 @@
     <div class="popup-content">
         <span class="close" onclick="window.location.href = 'plan.ejs'">&times;</span>
         <h2>Delete Data</h2>
+        <form action="">
         <p>please enter id for deletion</p>
         <input type="text" id="pproductID" 
-        class="inputdata" placeholder="ProductID"><span id="DeleteErrorProductId" class="error-message hidden">Id not found </span><br><br>
-        <button onclick="deletePlan()" class="editors">Delete</button>
+        class="inputdata" placeholder="ProductID"><span id="DeleteIDError" class="error-message hidden">Id not found </span><br><br>
+        <button onclick="deletePlan(event)" class="editors">Delete</button>
+    </form>
     </div>
 </div>
 

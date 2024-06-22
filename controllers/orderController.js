@@ -1,7 +1,7 @@
 // controllers/orderController.js
 
 const Order = require("../models/mydataschema");
-
+const User = require("../models/users");
 exports.renderAddOrders = async (req, res) => {
   const ordersArray = await Order.find({});
   
@@ -21,9 +21,28 @@ exports.renderDeleteOrders = async (req, res) => {
 exports.getIndex = async (req, res) => {
   try {
     const ordersArray = await Order.find({});
+    const UsersArray = await User.find({});
     console.log("rerendered");
-    
-    res.render("index", { arr: ordersArray , success : req.session.success , message : req.session.message  });
+
+    let totalPrice = 0;
+    const userCount = UsersArray.length;
+ordersArray.forEach(order => {
+  let price = order.price;
+  
+
+  // Convert price to a number if it's a string
+  if (typeof price === 'string') {
+    price = parseFloat(price);
+  }
+
+  // Check if price is a number and not NaN
+  if (typeof price === 'number' && !isNaN(price)) {
+    totalPrice += price;
+  } 
+});
+
+
+    res.render("index", { arr: ordersArray, users:  userCount, totalprices: totalPrice , success : req.session.success , message : req.session.message  });
   } catch (err) {
     console.error("Error fetching orders:", err);
     res.status(500).send("Internal Server Error");
@@ -43,8 +62,23 @@ exports.createOrder = async (req, res) => {
           res.status(400).redirect("Orders-Crud/AddOrders");
       }
 
+      
+        const prices = {
+            'basic': {
+                '1-month': 50,
+                '3-months': 120,
+                '6-months': 200
+            },
+            'premium': {
+                '1-month': 80,
+                '3-months': 200,
+                '6-months': 350
+            }
+          }
+          const price = prices[plan][duration];
+    console.log(price);
       // Create a new order instance
-      const order = new Order({ plan, duration });
+      const order = new Order({ plan, duration,price });
       await order.save();
       console.log('Order created successfully');
 

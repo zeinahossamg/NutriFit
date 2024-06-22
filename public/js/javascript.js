@@ -119,37 +119,7 @@ document.getElementById('ProductTABLE').appendChild(tr);
 
 
 
-function deletePlan() {
-    // Get the plan ID to delete
-    let planIdToDelete = parseInt(document.getElementById('pproductID').value);
 
-    // Find the index of the plan to delete by its ID
-    const indexToDelete = Products.findIndex(plan => plan.ProductID === planIdToDelete);
-    document.getElementById('DeleteIDError').classList.add('hidden');
-
-    // Check if the plan ID is valid
-    if (isNaN(planIdToDelete)) {
-        document.getElementById('DeleteIDError').classList.remove('hidden');
-        return;
-    }
-
-    // Check if the plan exists
-    if (indexToDelete === -1) {
-        document.getElementById('DeleteIDError').classList.remove('hidden');
-        return;
-    }
-
-    // Remove the plan from the Products array
-    Products.splice(indexToDelete, 1);
-
-    console.log('Deleting plan with ID:', planIdToDelete);
-
-    // Close the popup after deleting the plan
-    closePopup('deletePopupProduct');
-
-    // Render the updated table of plans
-    renderTableClassProducts();
-}
 
 
 
@@ -661,7 +631,7 @@ console.log(editUserId,newEmail,"Frontend");
         console.log('User edited successfully');
         // Optionally handle success message display or UI updates
         // Redirect after successful edit
-        window.location.href = "/admin/user.ejs";
+        window.location.href = "user.ejs";
     })
     .catch(error => {
         console.error('Error editing user:', error);
@@ -688,8 +658,8 @@ function deleteData(event) {
     }
 
     // Perform AJAX request to delete user
-    fetch(`/admin/DeleteUsers`, {
-        method: 'DELETE',
+    fetch(`/admin/DeleteUsers?_method=DELETE`, {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -702,7 +672,7 @@ function deleteData(event) {
         console.log('User deleted successfully');
         // Optionally handle success message display or UI updates
         // Redirect after successful deletion
-        window.location.href = "/admin/user.ejs";
+        window.location.href = "user.ejs";
     })
     .catch(error => {
         console.error('Error deleting user:', error);
@@ -712,7 +682,44 @@ function deleteData(event) {
 }
 
 
+function deletePlan(event) {
+    event.preventDefault();
 
+    // Get the plan ID to delete
+    let planIdToDelete = document.getElementById('pproductID').value;
+    document.getElementById('DeleteIDError').classList.add('hidden');
+
+    // Check if the plan ID is valid
+    if (planIdToDelete === "") {
+        document.getElementById('DeleteIDError').textContent = 'Please provide a valid plan ID';
+        document.getElementById('DeleteIDError').classList.remove('hidden');
+        return;
+    }
+
+    console.log('Deleting plan with ID:', planIdToDelete);
+
+    // Make an API call to delete the plan
+    fetch('DeletePlans?_method=DELETE', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: planIdToDelete }),
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        console.log('Plan deleted successfully front end');
+        // Optionally handle success message display or UI updates
+        // Redirect after successful deletion
+        window.location.href = "plan.ejs";
+    }).catch(error => {
+        console.error('Error deleting plan:', error);
+        document.getElementById('DeleteIDError').textContent = 'Error deleting plan';
+        document.getElementById('DeleteIDError').classList.remove('hidden');
+    });
+}
 
 
 
@@ -820,7 +827,7 @@ function editPlan(event) {
         console.log('Plan edited successfully');
         // Optionally handle success message display or UI updates
         // Redirect after successful editing
-        window.location.href = "/admin/plan.ejs";
+        window.location.href = "plan.ejs";
     }).catch(error => {
         console.error('Error editing plan:', error);
         document.getElementById('EditErrorProductId').textContent = 'Error editing plan';
