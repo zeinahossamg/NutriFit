@@ -7,10 +7,10 @@ const articleSchema = new Schema({
   Address:String,
   Country:String,
   City:String,
-  ZipCode:Number,
-  CARDNUMBER:Number,
-  CARDHOLDER:String,
-  VALIDTHRU:Number,
+  Zip_Code:Number,
+  CARD_NUMBER:Number,
+  CARD_HOLDER:String,
+  VALID_THRU:Number,
   CVV:Number,
   });
 
