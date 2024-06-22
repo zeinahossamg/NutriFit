@@ -1,0 +1,80 @@
+* {
+  font-family: Arial, sans-serif;
+}
+
+.form-container {
+  background-color: #050c9c;
+  color: white;
+  padding: 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 20px;
+}
+
+.form-group {
+  margin: 30px 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-group textarea {
+  resize: vertical;
+  height: 100px;
+}
+
+.form-group button {
+  width: 50%;
+  padding: 10px;
+  background-color: white;
+  color: #050c9c;
+  border: none;
+  border-radius: 5px;
+  font-size: large;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  align-self: center;
+}
+
+.form-group button:hover {
+  background-color: #dbeafe;
+  transform: scale(1.05);
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-item img {
+  width: 345;
+  height: 400;
+  align-self: center;
+  margin-top: 100px;
+}
+
+#message {
+  background-color: white;
+  padding: 30px;
+  align-self: center;
+  border: 10px;
+}
+
+.hidden {
+  display: none;
+}

@@ -1,0 +1,85 @@
+* {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.motivation {
+  background-color: #050c9c;
+  padding: 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.motivation-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 20px;
+}
+
+.motivation h1 {
+  color: white;
+  text-transform: uppercase;
+  font-size: 2.5em;
+}
+
+.motivation p {
+  color: white;
+  font-size: 1.5em;
+  margin-top: 30px;
+}
+
+span img {
+  margin-bottom: -15px;
+}
+
+.gym-girl-container {
+  padding: 80px 20px;
+  padding-bottom: 0;
+  background-color: #f5f5f5;
+  width: fit-content;
+  border-radius: 10px;
+}
+
+.exercises-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+.exercise {
+  background-color: white;
+  color: #050c9c;
+  height: 25rem;
+  padding: 60px 20px;
+  border-radius: 10px;
+  border-color: #050c9c;
+  border-style: solid;
+  border-width: 10px;
+  font-size: large;
+  box-shadow: 0 4px 8px 0 rgba(5, 12, 156, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.exercise-btn {
+  background-color: #050c9c;
+  color: white;
+  padding: 10px 50px;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 20px;
+  font-size: large;
+  width: fit-content;
+  cursor: pointer;
+  align-self: center;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.exercise-btn:hover {
+  background-color: #5a67d8;
+  transform: scale(1.05);
+}
