@@ -13,6 +13,10 @@ const session = require('express-session');
 app.use(express.json());
 const cors = require('cors');
 const MainorderRoutes = require("./routes/Orders");
+const PaymentRoutes = require("./routes/Payment")
+const NutritionRoutes = require("./routes/nutrition")
+
+
 
 app.use(cors());
 app.use(session({
@@ -40,6 +44,12 @@ liveReloadServer.server.once("connection", () => {
     liveReloadServer.refresh("/");
   }, 100);
 });
+
+
+
+app.use("/", NutritionRoutes );
+app.use("/", PaymentRoutes );
+
 
 // Routes
 app.use("/", orderRoutes);

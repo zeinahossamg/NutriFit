@@ -442,12 +442,13 @@ function openHTMLFileAdmin() {
 
 }
 function showContent() {
+    
     event.preventDefault();
     document.querySelector('.Log-SignContainer').classList.add('hidden');
     document.querySelector('.container').classList.remove('hidden');
 }
 function signup() {
-    
+    window.open('homepage.html', '_self');
     event.preventDefault();
     let username = document.getElementById('signupUsername').value;
     let email = document.getElementById('signupEmail').value;
@@ -493,19 +494,13 @@ function signup() {
         return;
     }
 
-    let newUser = new Client(nextUserId++, username, password,email);
-    console.log(newUser);
-    users.push(newUser);
-    
-   
-    renderTableClassUsers();
-    renderTableClassOrders();
+
 
 
     document.getElementById('signupEmail').value = '';
     document.getElementById('signupUsername').value = '';
     document.getElementById('signupPassword').value = '';
-    openHTMLFile();
+    
 }
 
 function showLoginContent() {
